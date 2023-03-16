@@ -16,7 +16,7 @@ public class PlayerScript : MonoBehaviour
 
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
-    public bool isLastContactMovingPlatform;
+    public bool isLastContactMovingPlatform = false;
     private Time timer;
     MovingPlatformController movingPlatformController;
 
@@ -24,7 +24,6 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-
     }
     private void OnCollisionEnter2D(Collider2D collision)
     {
@@ -69,7 +68,7 @@ public class PlayerScript : MonoBehaviour
         }
         if (isLastContactMovingPlatform)
         {
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x + movingPlatformController.rb.velocity.x, myRigidbody.velocity.y);
+            myRigidbody.velocity = myRigidbody.velocity + movingPlatformController.rb.velocity;
         }
 
     }
