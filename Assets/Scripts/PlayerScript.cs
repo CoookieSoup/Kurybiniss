@@ -16,21 +16,11 @@ public class PlayerScript : MonoBehaviour
 
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
-    public bool isLastContactMovingPlatform = false;
-    private Time timer;
-    MovingPlatformController movingPlatformController;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
-    }
-    private void OnCollisionEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.name == "Platform")
-        {
-            isLastContactMovingPlatform = false;
-        }
     }
 
 
@@ -64,12 +54,8 @@ public class PlayerScript : MonoBehaviour
         if (isOnPlatform)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x + platformRb.velocity.x, myRigidbody.velocity.y);
-            isLastContactMovingPlatform = true;
         }
-        if (isLastContactMovingPlatform)
-        {
-            myRigidbody.velocity = myRigidbody.velocity + movingPlatformController.rb.velocity;
-        }
+
 
     }
     
