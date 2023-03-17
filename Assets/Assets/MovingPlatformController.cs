@@ -64,6 +64,17 @@ public class MovingPlatformController : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             movementController.isOnPlatform = false;
+            movementController.platformRb = rb;
         }
     }
+
+   // private void OnCollisionEnter2D(Collision2D collision)
+   // {
+       // if (collision.gameObject.CompareTag("Ground") && collision.gameObject.name == ("Platform"))
+       // {
+          //  movementController.isOnPlatform = false;
+           // movementController.platformRb = rb;
+        //}
+    //}
+    
 }
