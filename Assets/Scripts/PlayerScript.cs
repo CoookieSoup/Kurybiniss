@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
 
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
+    public Animator animator;
 
     public bool flipX;
 
@@ -40,7 +41,9 @@ public class PlayerScript : MonoBehaviour
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(4f, 0.2f), 0, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
         myRigidbody.velocity = new Vector2(horizontal * speedStrength, myRigidbody.velocity.y);
-        
+
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpStrength);
