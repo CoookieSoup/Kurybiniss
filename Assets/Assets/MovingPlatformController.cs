@@ -12,6 +12,9 @@ public class MovingPlatformController : MonoBehaviour
     public Rigidbody2D rb;
     Vector3 moveDirection;
 
+    public Rigidbody2D playerRb;
+    public bool jumpedOffMovingPlatform;
+
     private void Awake()
     {
         movementController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -53,6 +56,7 @@ public class MovingPlatformController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        
         if (collision.CompareTag("Player"))
         {
             movementController.isOnPlatform = true;
@@ -61,20 +65,15 @@ public class MovingPlatformController : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        jumpedOffMovingPlatform = true;
         if (collision.CompareTag("Player"))
         {
             movementController.isOnPlatform = false;
             movementController.platformRb = rb;
+            playerRb.AddForce(transform.right * rb.velocity.x);
+
+
         }
     }
-
-   // private void OnCollisionEnter2D(Collision2D collision)
-   // {
-       // if (collision.gameObject.CompareTag("Ground") && collision.gameObject.name == ("Platform"))
-       // {
-          //  movementController.isOnPlatform = false;
-           // movementController.platformRb = rb;
-        //}
-    //}
     
 }
