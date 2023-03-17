@@ -13,7 +13,6 @@ public class MovingPlatformController : MonoBehaviour
     Vector3 moveDirection;
 
     public Rigidbody2D playerRb;
-    public bool jumpedOffMovingPlatform;
 
     private void Awake()
     {
@@ -63,16 +62,13 @@ public class MovingPlatformController : MonoBehaviour
             movementController.platformRb = rb;
         }
     }
+    //note to self play with this for momentum, if deleted close to good
     private void OnTriggerExit2D(Collider2D collision)
     {
-        jumpedOffMovingPlatform = true;
         if (collision.CompareTag("Player"))
         {
             movementController.isOnPlatform = false;
             movementController.platformRb = rb;
-            playerRb.AddForce(transform.right * rb.velocity.x);
-
-
         }
     }
     

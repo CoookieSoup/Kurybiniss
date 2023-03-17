@@ -12,6 +12,10 @@ public class FollowPlayer : MonoBehaviour
         
     }
 
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+    }
     // Update is called once per frame
     void Update()
     {

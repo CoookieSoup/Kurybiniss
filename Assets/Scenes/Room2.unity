@@ -135,6 +135,10 @@ PrefabInstance:
       value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 6789744744061727486, guid: f926b68983b62064389b4d20553a9e5e, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1703269168}
+    - target: {fileID: 6789744744061727486, guid: f926b68983b62064389b4d20553a9e5e, type: 3}
       propertyPath: CameraFollowSpeed
       value: 4
       objectReference: {fileID: 0}
@@ -796,6 +800,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
+--- !u!4 &1703269168 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5413221877858420655, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
+  m_PrefabInstance: {fileID: 1703269167}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1894431544
 GameObject:
   m_ObjectHideFlags: 0

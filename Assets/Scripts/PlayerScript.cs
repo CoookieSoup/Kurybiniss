@@ -60,21 +60,10 @@ public class PlayerScript : MonoBehaviour
             sprite.flipX = false;
         }
 
-
-
         if (isOnPlatform)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x + platformRb.velocity.x, myRigidbody.velocity.y);
         }
-        if (isGrounded)
-        {
-            movingPlatformController.jumpedOffMovingPlatform = false;
-        }
-        if (movingPlatformController.jumpedOffMovingPlatform == true)
-        {
-            myRigidbody.AddForce(transform.right * movingPlaftormRb.velocity.x);
-        }
-
 
     }
     
