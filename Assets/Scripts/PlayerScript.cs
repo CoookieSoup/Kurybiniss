@@ -13,7 +13,7 @@ public class PlayerScript : MonoBehaviour
 
     public Transform groundCheck;
     public LayerMask groundLayer;
-    bool isGrounded;
+    public bool isGrounded;
 
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
@@ -38,7 +38,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         //grounded check, tie skaiciai su f yra hardcoded, tu scenoje ant isGrounded object uzdek CapsuleColider, settink i horizontal ir kokie skaiciukai tokius duek kad jump hitbox
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(3f, 0.4f), 0, groundLayer);
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(4f, 0.2f), 0, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
         myRigidbody.velocity = new Vector2(horizontal * speedStrength, myRigidbody.velocity.y);
 
@@ -46,6 +46,10 @@ public class PlayerScript : MonoBehaviour
         if (isGrounded)
         {
             animator.SetBool("IsJumping", false);
+        }
+        if (!isGrounded)
+        {
+            animator.SetBool("IsJumping", true);
         }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
