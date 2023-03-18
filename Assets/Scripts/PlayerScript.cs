@@ -56,7 +56,6 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetButtonUp("Jump") && myRigidbody.velocity.y > -1f)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y * 0.5f);
-            animator.SetBool("IsJumping", true);
         }
         if (Input.GetKey(KeyCode.A))
         {
