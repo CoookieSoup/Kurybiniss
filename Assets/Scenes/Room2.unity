@@ -750,10 +750,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5413221877858420640, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
+      propertyPath: m_Mass
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5413221877858420641, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 1703269169}
+    - target: {fileID: 5413221877858420641, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
+      propertyPath: jumpStrength
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5413221877858420641, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
+      propertyPath: speedStrength
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 5413221877858420642, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
+      propertyPath: m_Size.y
+      value: 8.8291855
+      objectReference: {fileID: 0}
+    - target: {fileID: 5413221877858420642, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.13876963
+      objectReference: {fileID: 0}
+    - target: {fileID: 5413221877858420642, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.61007226
+      objectReference: {fileID: 0}
     - target: {fileID: 5413221877858420653, guid: aceca7d6e9a67654ab24720c636b358c, type: 3}
       propertyPath: m_Name
       value: Player

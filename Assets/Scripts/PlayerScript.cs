@@ -38,23 +38,29 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
         //grounded check, tie skaiciai su f yra hardcoded, tu scenoje ant isGrounded object uzdek CapsuleColider, settink i horizontal ir kokie skaiciukai tokius duek kad jump hitbox
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(4f, 0.2f), 0, groundLayer);
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(3f, 0.4f), 0, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
         myRigidbody.velocity = new Vector2(horizontal * speedStrength, myRigidbody.velocity.y);
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        if (isGrounded)
+        {
+            animator.SetBool("IsJumping", false);
+        }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpStrength);
+            animator.SetBool("IsJumping", true);
         }
         if (Input.GetButtonUp("Jump") && myRigidbody.velocity.y > -1f)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y * 0.5f);
+            animator.SetBool("IsJumping", true);
         }
         if (Input.GetKey(KeyCode.A))
         {
-                myRigidbody.velocity = new Vector2(-speedStrength, myRigidbody.velocity.y);
+            myRigidbody.velocity = new Vector2(-speedStrength, myRigidbody.velocity.y);
             sprite.flipX = true;
         }
         if (Input.GetKey(KeyCode.D))
