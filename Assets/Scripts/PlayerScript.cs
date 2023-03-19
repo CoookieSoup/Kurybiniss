@@ -43,11 +43,17 @@ public class PlayerScript : MonoBehaviour
         myRigidbody.velocity = new Vector2(horizontal * speedStrength, myRigidbody.velocity.y);
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        if (isGrounded)
+        if (myRigidbody.velocity.y < 0f)
         {
             animator.SetBool("IsJumping", false);
+            animator.SetBool("IsFalling", true);
         }
-        if (!isGrounded)
+        if (isGrounded) 
+        {
+            animator.SetBool("IsJumping", false);
+            animator.SetBool("IsFalling", false);
+        }
+        if (!isGrounded && myRigidbody.velocity.y > 0f)
         {
             animator.SetBool("IsJumping", true);
         }
@@ -56,6 +62,7 @@ public class PlayerScript : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpStrength);
             animator.SetBool("IsJumping", true);
+            animator.SetBool("IsFalling", false);
         }
         if (Input.GetButtonUp("Jump") && myRigidbody.velocity.y > -1f)
         {
