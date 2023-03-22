@@ -9,7 +9,10 @@ public class PlayerScript : MonoBehaviour
     public float jumpStrength;
     public float speedStrength;
     private float horizontal;
-    
+    private float jumpTime = 2f;
+    private float jumpCounter;
+    public bool hasJumped = false;
+
     public Transform groundCheck;
     public LayerMask groundLayer;
     public bool isGrounded;
@@ -56,6 +59,7 @@ public class PlayerScript : MonoBehaviour
     }
     // Wall slide logic end
 
+    // Wall jump logic start
     private void WallJump()
     {
         if (isWallSliding)
@@ -98,17 +102,29 @@ public class PlayerScript : MonoBehaviour
         isWallJumping = false;
     }
 
-
-
-
-
-
-    // Wall jump logic start
-
     // Wall jump logic end
 
 
+    private void ExtendedJump()
+    {
+        jumpCounter -= Time.deltaTime;
+        if (isGrounded && Input.GetButtonDown("Jump") == true)
+        {
+            hasJumped = false;
+        }
+        if (Input.GetButtonDown("Jump") && isGrounded || isGrounded)
+        {
+            hasJumped = true;
+            jumpCounter = jumpTime;
+        }
+        if (Input.GetButtonDown("Jump") && isGrounded == false && jumpCounter > 0f && hasJumped == true)
+        {
+            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpStrength);
+            jumpCounter = 0f;
+        }
 
+
+    }
 
 
     // Start is called before the first frame update
@@ -116,6 +132,7 @@ public class PlayerScript : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+
     }
 
 
@@ -171,6 +188,8 @@ public class PlayerScript : MonoBehaviour
 
         WallSlide();
         WallJump();
+        ExtendedJump();
+
 
     }
     
