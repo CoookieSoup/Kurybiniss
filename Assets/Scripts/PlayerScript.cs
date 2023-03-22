@@ -9,9 +9,9 @@ public class PlayerScript : MonoBehaviour
     public float jumpStrength;
     public float speedStrength;
     private float horizontal;
-    private float jumpTime = 2f;
+    private float jumpTime = 0.1f;
     private float jumpCounter;
-    public bool hasJumped = false;
+    private bool hasJumped = false;
 
     public Transform groundCheck;
     public LayerMask groundLayer;
@@ -30,7 +30,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     private bool isWallJumping;
     private float wallJumpingDirection;
-    private float wallJumpingTime = 0.1f;
+    private float wallJumpingTime = 0.05f;
     private float wallJumpingCounter;
     private float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new Vector2(10f, 20f);
@@ -80,7 +80,7 @@ public class PlayerScript : MonoBehaviour
         {
             wallJumpingCounter -= Time.deltaTime;
         }
-        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f)
+        if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && myRigidbody.velocity.y <= 0f)
         {
             isWallJumping = true;
             myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
@@ -104,27 +104,40 @@ public class PlayerScript : MonoBehaviour
 
     // Wall jump logic end
 
-
+    // Coyote time logic start
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.collider.CompareTag("Ground") && myRigidbody.velocity.y <= 0f)
+        {
+            jumpCounter = jumpTime;
+        }
+        if (collision.collider.CompareTag("Ground") && myRigidbody.velocity.y > 0f)
+        {
+            wallJumpingCounter = 0f;
+        }
+        
+    }
     private void ExtendedJump()
     {
         jumpCounter -= Time.deltaTime;
-        if (isGrounded && Input.GetButtonDown("Jump") == true)
+        if (isGrounded && myRigidbody.velocity.y == 0f)
         {
             hasJumped = false;
         }
-        if (Input.GetButtonDown("Jump") && isGrounded || isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded)
         {
             hasJumped = true;
-            jumpCounter = jumpTime;
         }
-        if (Input.GetButtonDown("Jump") && isGrounded == false && jumpCounter > 0f && hasJumped == true)
+        if (Input.GetButtonDown("Jump") && isGrounded == false && jumpCounter > 0f && hasJumped == false)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpStrength);
             jumpCounter = 0f;
+            hasJumped = true;
         }
-
-
     }
+
+    // Coyote time logic end
+
 
 
     // Start is called before the first frame update
@@ -132,7 +145,6 @@ public class PlayerScript : MonoBehaviour
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
-
     }
 
 
@@ -185,12 +197,9 @@ public class PlayerScript : MonoBehaviour
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x + platformRb.velocity.x, myRigidbody.velocity.y);
         }
 
-
         WallSlide();
         WallJump();
         ExtendedJump();
-
-
     }
     
 }
