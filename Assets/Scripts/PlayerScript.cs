@@ -28,14 +28,10 @@ public class PlayerScript : MonoBehaviour
     public float wallSlideSpeed = 7f;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
-    private bool isWallJumping;
     private float wallJumpingDirection;
     private float wallJumpingTime = 0.05f;
     private float wallJumpingCounter;
-    private float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new Vector2(10f, 20f);
-
-
 
 
     // Wall slide logic start
@@ -64,7 +60,6 @@ public class PlayerScript : MonoBehaviour
     {
         if (isWallSliding)
         {
-            isWallJumping = false;
             if (flipX == true)
             {
                 wallJumpingDirection = -1f;
@@ -74,7 +69,6 @@ public class PlayerScript : MonoBehaviour
                 wallJumpingDirection = 1f;
             }
             wallJumpingCounter = wallJumpingTime;
-            CancelInvoke(nameof(StopWallJumping));
         }
         else
         {
@@ -82,7 +76,6 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && myRigidbody.velocity.y <= 0f)
         {
-            isWallJumping = true;
             myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
             if(flipX == false && wallJumpingDirection == -1)
@@ -93,13 +86,8 @@ public class PlayerScript : MonoBehaviour
             {
                 flipX = false;
             }
-            Invoke(nameof(StopWallJumping), wallJumpingDuration);
         }
 
-    }
-     private void StopWallJumping()
-    {
-        isWallJumping = false;
     }
 
     // Wall jump logic end
