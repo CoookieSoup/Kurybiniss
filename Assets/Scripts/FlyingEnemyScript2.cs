@@ -15,7 +15,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
     }
     void OnCollisionEnter2D (Collision2D collider)
     {
-        if (collider.gameObject.name == "Player")
+        if (collider.gameObject.CompareTag("Player"))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
