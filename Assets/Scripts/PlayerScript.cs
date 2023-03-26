@@ -49,6 +49,9 @@ public class PlayerScript : MonoBehaviour
         {
             isWallSliding = true;
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
+            animator.SetBool("IsWallSliding", true);
+            animator.SetBool("IsFalling", false);
+
         }
         else
         {
