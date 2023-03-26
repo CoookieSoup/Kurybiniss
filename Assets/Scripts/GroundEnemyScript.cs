@@ -5,14 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class GroundEnemyScript : MonoBehaviour
 {
-    //RaycastHit2D hitUpper;
-    //RaycastHit2D hitLower;
     RaycastHit2D hit;
-    [SerializeField] Transform playerPos;
+    private Transform playerPos;
     private Rigidbody2D GroundEnemyRb;
-    public float GroundEnemySpeedStrength = 10f;
-    [SerializeField] float EnemyDetectRange = 10f;
-    //private Vector2 PlayerUpper;
+    [SerializeField] private float GroundEnemySpeedStrength = 10f;
+    [SerializeField] private float EnemyDetectRange = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +29,6 @@ public class GroundEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //hitUpper = Physics2D.Raycast(transform.position, playerPos.position - transform.position);
-        //hitLower = Physics2D.Raycast(transform.position, playerPos.position - transform.position);
         hit = Physics2D.Raycast(transform.position, playerPos.position - transform.position);
         if (hit.collider.gameObject.CompareTag("Player") && Mathf.Abs(playerPos.position.x - transform.position.x) < EnemyDetectRange) //31
         {
@@ -47,7 +41,7 @@ public class GroundEnemyScript : MonoBehaviour
                 GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
             }
         }
-        else
+        if (hit.collider.gameObject.CompareTag("Player") == false || Mathf.Abs(playerPos.position.x - transform.position.x) >= EnemyDetectRange)
         {
             GroundEnemyRb.velocity = new Vector2(0f, 0f);
         }
