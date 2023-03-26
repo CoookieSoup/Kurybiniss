@@ -24,7 +24,7 @@ public class PlayerScript : MonoBehaviour
     public Animator animator;
     public bool flipX;
 
-    private bool isWallSliding;
+    public bool isWallSliding;
     public float wallSlideSpeed = 7f;
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
@@ -49,7 +49,7 @@ public class PlayerScript : MonoBehaviour
         {
             isWallSliding = true;
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
-            animator.SetBool("IsWallSliding", true);
+            animator.SetBool("isWallSliding", true);
             animator.SetBool("IsFalling", false);
 
         }
