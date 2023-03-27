@@ -40,7 +40,7 @@ public class PlayerScript : MonoBehaviour
 
     private bool IsTouchingWall()
     {
-        return Physics2D.OverlapBox(wallCheck.position, new Vector2(4.1f, 4f), 0, groundLayer);
+        return Physics2D.OverlapBox(wallCheck.position, new Vector2(4.005f, 4f), 0, groundLayer);
     }
 
     private void WallSlide ()
@@ -147,13 +147,13 @@ public class PlayerScript : MonoBehaviour
         myRigidbody.velocity = new Vector2(horizontal * speedStrength, myRigidbody.velocity.y);
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        if (isWallSliding) 
+        if (isWallSliding && myRigidbody.velocity.x == speedStrength) 
         {
             animator.SetBool("isWallSliding", true);
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
         }
-        if (!isWallSliding) 
+        if (!isWallSliding && wallJumpingCounter != wallJumpingTime) 
         {
             animator.SetBool("isWallSliding", false);
         }
