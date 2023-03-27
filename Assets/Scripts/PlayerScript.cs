@@ -49,8 +49,6 @@ public class PlayerScript : MonoBehaviour
         {
             isWallSliding = true;
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
-            animator.SetBool("isWallSliding", true);
-            animator.SetBool("IsFalling", false);
 
         }
         else
@@ -149,8 +147,19 @@ public class PlayerScript : MonoBehaviour
         myRigidbody.velocity = new Vector2(horizontal * speedStrength, myRigidbody.velocity.y);
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        if (myRigidbody.velocity.y < 0f)
+        if (isWallSliding) 
         {
+            animator.SetBool("isWallSliding", true);
+            animator.SetBool("IsFalling", false);
+            animator.SetBool("IsJumping", false);
+        }
+        if (!isWallSliding) 
+        {
+            animator.SetBool("isWallSliding", false);
+        }
+        if (myRigidbody.velocity.y < 0f && !isWallSliding)
+        {
+            animator.SetBool("isWallSliding", false);
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", true);
         }
@@ -159,9 +168,10 @@ public class PlayerScript : MonoBehaviour
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", false);
         }
-        if (!isGrounded && myRigidbody.velocity.y > 0f)
+        if (!isGrounded && myRigidbody.velocity.y > 0f && isWallSliding)
         {
             animator.SetBool("IsJumping", true);
+            animator.SetBool("isWallSliding", false);
         }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
