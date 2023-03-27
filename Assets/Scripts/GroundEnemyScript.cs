@@ -11,7 +11,11 @@ public class GroundEnemyScript : MonoBehaviour
     private Rigidbody2D GroundEnemyRb;
     private Transform GroundEnemyLOSCheck;
     [SerializeField] private float GroundEnemySpeedStrength = 10f;
-    [SerializeField] private float EnemyDetectRange = 10f;
+    [SerializeField] private float EnemyDetectRange;
+    public float jumpStrength = 10f;
+    public bool isGrounded;
+    [SerializeField] private LayerMask groundLayer;
+    public Transform groundCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -32,6 +36,7 @@ public class GroundEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.2f, 0.2f), 0, groundLayer);
         hitUpper = Physics2D.Raycast(new Vector3 (GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position);
         Debug.DrawRay(new Vector3(GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position, Color.green);
         if (hitUpper.collider.gameObject.CompareTag("Player") && Mathf.Abs(playerPos.position.x - transform.position.x) < EnemyDetectRange) //31
@@ -48,11 +53,11 @@ public class GroundEnemyScript : MonoBehaviour
         
         if (hitUpper.collider.gameObject.CompareTag("Player") == false)
         {
-            GroundEnemyRb.velocity = new Vector2(0f, 0f);
+            GroundEnemyRb.velocity = new Vector2(0f, GroundEnemyRb.velocity.y);
         }
         if (Mathf.Abs(playerPos.position.x - transform.position.x) >= EnemyDetectRange)
         {
-            GroundEnemyRb.velocity = new Vector2(0f, 0f);
+            GroundEnemyRb.velocity = new Vector2(0f, GroundEnemyRb.velocity.y);
         }
     }
     
