@@ -79,7 +79,7 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && myRigidbody.velocity.y <= 0f)
         {
-            myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
+            myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x * 2, wallJumpingPower.y * 2);
             wallJumpingCounter = 0f;
             if(flipX == false && wallJumpingDirection == -1)
             {
@@ -172,6 +172,10 @@ public class PlayerScript : MonoBehaviour
         {
             animator.SetBool("IsJumping", true);
             animator.SetBool("isWallSliding", false);
+        }
+        if (!isGrounded && myRigidbody.velocity.y > 0f)
+        {
+            animator.SetBool("IsJumping", true);
         }
 
         if (Input.GetButtonDown("Jump") && isGrounded)
