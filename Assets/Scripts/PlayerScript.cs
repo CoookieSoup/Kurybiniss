@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class PlayerScript : MonoBehaviour
 
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
+    private Vector2 platfromVelWithPlayerCache;
+    private bool jumpedOffMovingPlatform;
 
     public SpriteRenderer sprite;
     public Animator animator;
@@ -33,8 +36,12 @@ public class PlayerScript : MonoBehaviour
     private float wallJumpingCounter;
     private Vector2 wallJumpingPower = new Vector2(10f, 20f);
 
-
-
+    public float maxHealth = 4f;
+    public float currentHealth = 4f;
+    [SerializeField] private Image healthBar;
+    public float defaultInvincibilityTimer;
+    public float currentInvincibilityTimer;
+    public bool tookDamage;
 
     // Wall slide logic start
 
@@ -106,7 +113,12 @@ public class PlayerScript : MonoBehaviour
         {
             wallJumpingCounter = 0f;
         }
-        
+        if (collision.collider.gameObject.name == "MovingPlatform")
+        {
+            myRigidbody.velocity = platfromVelWithPlayerCache;
+        }
+
+
     }
     private void ExtendedJump()
     {
@@ -129,13 +141,32 @@ public class PlayerScript : MonoBehaviour
 
     // Coyote time logic end
 
-
+    // Health system start
+    private void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.CompareTag("Enemy")){
+            jumpedOffMovingPlatform = true;
+        }
+        if (collider.gameObject.CompareTag("Enemy") && tookDamage == false)
+        {
+            tookDamage = true;
+            currentInvincibilityTimer = defaultInvincibilityTimer;
+            currentHealth--;
+            if (currentHealth <= 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            healthBar.fillAmount = (currentHealth / maxHealth);
+        }
+    }
+    // Health system end
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
+        currentInvincibilityTimer = defaultInvincibilityTimer;
     }
 
 
@@ -163,6 +194,10 @@ public class PlayerScript : MonoBehaviour
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", true);
         }
+        if (isGrounded && myRigidbody.velocity.y == 0f)
+        {
+            jumpedOffMovingPlatform = false;
+        }
         if (isGrounded) 
         {
             animator.SetBool("IsJumping", false);
@@ -188,12 +223,12 @@ public class PlayerScript : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y * 0.5f);
         }
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && Mathf.Abs(myRigidbody.velocity.x) <= speedStrength)
         {
             myRigidbody.velocity = new Vector2(-speedStrength, myRigidbody.velocity.y);
             sprite.flipX = true;
         }
-        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(myRigidbody.velocity.x) <= speedStrength)
         {
             myRigidbody.velocity = new Vector2(speedStrength, myRigidbody.velocity.y);
             sprite.flipX = false;
@@ -202,11 +237,20 @@ public class PlayerScript : MonoBehaviour
         if (isOnPlatform)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x + platformRb.velocity.x, myRigidbody.velocity.y);
+            platfromVelWithPlayerCache = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y);
         }
 
         WallSlide();
         WallJump();
         ExtendedJump();
+        if (tookDamage)
+        {
+            currentInvincibilityTimer -= Time.deltaTime;
+        }
+        if (currentInvincibilityTimer <= 0f)
+        {
+            tookDamage = false;
+        }
     }
     
 }

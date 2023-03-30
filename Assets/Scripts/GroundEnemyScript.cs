@@ -24,14 +24,14 @@ public class GroundEnemyScript : MonoBehaviour
         GroundEnemyRb = GetComponent<Rigidbody2D>();
         GroundEnemyLOSCheck = GetComponent<Transform>();
     }
-
-    void OnCollisionEnter2D(Collision2D collider)
-    {
-        if (collider.gameObject.CompareTag("Player"))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-    }
+    
+    //void OnCollisionEnter2D(Collision2D collider)
+    //{
+    //if (collider.gameObject.CompareTag("Player"))
+    //{
+    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    //}
+    //}
 
     // Update is called once per frame
     void Update()
