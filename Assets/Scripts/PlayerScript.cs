@@ -20,8 +20,9 @@ public class PlayerScript : MonoBehaviour
 
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
-    private Vector2 platfromVelWithPlayerCache;
+    public Vector2 platfromVelWithPlayerCache;
     private bool jumpedOffMovingPlatform;
+    public float platfromVelWithPlayerCachex;
 
     public SpriteRenderer sprite;
     public Animator animator;
@@ -115,7 +116,8 @@ public class PlayerScript : MonoBehaviour
         }
         if (collision.collider.gameObject.name == "MovingPlatform")
         {
-            myRigidbody.velocity = platfromVelWithPlayerCache;
+            myRigidbody.velocity = new Vector2 (platfromVelWithPlayerCache.x, platfromVelWithPlayerCache.y + myRigidbody.velocity.y);
+            jumpedOffMovingPlatform = true;
         }
 
 
@@ -202,6 +204,7 @@ public class PlayerScript : MonoBehaviour
         {
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", false);
+            jumpedOffMovingPlatform = false;
         }
         if (!isGrounded && myRigidbody.velocity.y > 0f && isWallSliding)
         {
@@ -223,21 +226,37 @@ public class PlayerScript : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y * 0.5f);
         }
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && Mathf.Abs(myRigidbody.velocity.x) <= speedStrength)
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
         {
-            myRigidbody.velocity = new Vector2(-speedStrength, myRigidbody.velocity.y);
+            if (jumpedOffMovingPlatform == true)
+            {
+                myRigidbody.velocity = new Vector2(platfromVelWithPlayerCache.x, myRigidbody.velocity.y);
+            }
+            if (jumpedOffMovingPlatform == false)
+            {
+                myRigidbody.velocity = new Vector2(-speedStrength, myRigidbody.velocity.y);
+            }
             sprite.flipX = true;
         }
-        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && Mathf.Abs(myRigidbody.velocity.x) <= speedStrength)
+        //&& Mathf.Abs(myRigidbody.velocity.x) <= speedStrength
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
         {
-            myRigidbody.velocity = new Vector2(speedStrength, myRigidbody.velocity.y);
+            if (jumpedOffMovingPlatform == true)
+            {
+                myRigidbody.velocity = new Vector2(platfromVelWithPlayerCache.x, myRigidbody.velocity.y);
+            }
+            if (jumpedOffMovingPlatform == false)
+            {
+                myRigidbody.velocity = new Vector2(speedStrength, myRigidbody.velocity.y);
+            }
             sprite.flipX = false;
         }
 
         if (isOnPlatform)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x + platformRb.velocity.x, myRigidbody.velocity.y);
-            platfromVelWithPlayerCache = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y);
+            platfromVelWithPlayerCache = new Vector2(myRigidbody.velocity.x, platformRb.velocity.y);
+            platfromVelWithPlayerCachex = myRigidbody.velocity.x;
         }
 
         WallSlide();
