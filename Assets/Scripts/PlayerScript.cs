@@ -22,7 +22,6 @@ public class PlayerScript : MonoBehaviour
     public Rigidbody2D platformRb;
     public Vector2 platfromVelWithPlayerCache;
     private bool jumpedOffMovingPlatform;
-    public float platfromVelWithPlayerCachex;
 
     public SpriteRenderer sprite;
     public Animator animator;
@@ -43,6 +42,7 @@ public class PlayerScript : MonoBehaviour
     public float defaultInvincibilityTimer;
     public float currentInvincibilityTimer;
     public bool tookDamage;
+    public bool canMove;
 
     // Wall slide logic start
 
@@ -103,7 +103,7 @@ public class PlayerScript : MonoBehaviour
 
     // Wall jump logic end
 
-    // Coyote time logic start
+    // Coyote time logic start && off movement platform start
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Ground") && myRigidbody.velocity.y <= 0f)
@@ -122,6 +122,7 @@ public class PlayerScript : MonoBehaviour
 
 
     }
+    // Coyote time logic start && off movement platform end
     private void ExtendedJump()
     {
         jumpCounter -= Time.deltaTime;
@@ -146,11 +147,9 @@ public class PlayerScript : MonoBehaviour
     // Health system start
     private void OnCollisionEnter2D(Collision2D collider)
     {
-        if (collider.gameObject.CompareTag("Enemy")){
-            jumpedOffMovingPlatform = true;
-        }
         if (collider.gameObject.CompareTag("Enemy") && tookDamage == false)
         {
+            canMove = false;
             tookDamage = true;
             currentInvincibilityTimer = defaultInvincibilityTimer;
             currentHealth--;
@@ -159,6 +158,37 @@ public class PlayerScript : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             healthBar.fillAmount = (currentHealth / maxHealth);
+            if (collider.gameObject.transform.position.x < myRigidbody.position.x)
+            {
+                myRigidbody.velocity = new Vector2(speedStrength, jumpStrength);
+            }
+            if (collider.gameObject.transform.position.x > myRigidbody.position.x)
+            {
+                myRigidbody.velocity = new Vector2(-speedStrength, jumpStrength);
+            }
+        }
+    }
+    private void OnCollisionStay2D(Collision2D collider)
+    {
+        if (currentInvincibilityTimer < 0f && collider.gameObject.CompareTag("Enemy"))
+        {
+            canMove = false;
+            tookDamage = true;
+            currentInvincibilityTimer = defaultInvincibilityTimer;
+            currentHealth--;
+            if (currentHealth <= 0)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            healthBar.fillAmount = (currentHealth / maxHealth);
+            if (collider.gameObject.transform.position.x < myRigidbody.position.x)
+            {
+                myRigidbody.velocity = new Vector2(speedStrength, jumpStrength);
+            }
+            if (collider.gameObject.transform.position.x > myRigidbody.position.x)
+            {
+                myRigidbody.velocity = new Vector2(-speedStrength, jumpStrength);
+            }
         }
     }
     // Health system end
@@ -169,6 +199,7 @@ public class PlayerScript : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
         sprite = GetComponent<SpriteRenderer>();
         currentInvincibilityTimer = defaultInvincibilityTimer;
+        canMove = true;
     }
 
 
@@ -177,14 +208,17 @@ public class PlayerScript : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.2f, 0.2f), 0, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
-        myRigidbody.velocity = new Vector2(horizontal * speedStrength, myRigidbody.velocity.y);
-
+        if (canMove)
+        {
+            myRigidbody.velocity = new Vector2(horizontal * myRigidbody.velocity.x, myRigidbody.velocity.y); //changed speedStrength to myRigidbody.velocity.x here
+        }
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         if (isWallSliding) 
         {
             animator.SetBool("isWallSliding", true);
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
+            jumpedOffMovingPlatform = false;
         }
         if (!isWallSliding) 
         {
@@ -206,6 +240,10 @@ public class PlayerScript : MonoBehaviour
             animator.SetBool("IsFalling", false);
             jumpedOffMovingPlatform = false;
         }
+        if (currentInvincibilityTimer < defaultInvincibilityTimer - 0.5f)
+        {
+            canMove = true;
+        }
         if (!isGrounded && myRigidbody.velocity.y > 0f && isWallSliding)
         {
             animator.SetBool("IsJumping", true);
@@ -226,9 +264,13 @@ public class PlayerScript : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.y * 0.5f);
         }
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && canMove)
         {
-            if (jumpedOffMovingPlatform == true)
+            if (myRigidbody.velocity.x > speedStrength)
+            {
+                myRigidbody.velocity = new Vector2(-speedStrength, myRigidbody.velocity.y);
+            }
+            if (jumpedOffMovingPlatform == true && myRigidbody.velocity.x <= -speedStrength)
             {
                 myRigidbody.velocity = new Vector2(platfromVelWithPlayerCache.x, myRigidbody.velocity.y);
             }
@@ -239,9 +281,13 @@ public class PlayerScript : MonoBehaviour
             sprite.flipX = true;
         }
         //&& Mathf.Abs(myRigidbody.velocity.x) <= speedStrength
-        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && canMove)
         {
-            if (jumpedOffMovingPlatform == true)
+            if (myRigidbody.velocity.x < -speedStrength)
+            {
+                myRigidbody.velocity = new Vector2 (speedStrength, myRigidbody.velocity.y);
+            }
+            if (jumpedOffMovingPlatform == true && myRigidbody.velocity.x >= speedStrength)
             {
                 myRigidbody.velocity = new Vector2(platfromVelWithPlayerCache.x, myRigidbody.velocity.y);
             }
@@ -251,12 +297,10 @@ public class PlayerScript : MonoBehaviour
             }
             sprite.flipX = false;
         }
-
         if (isOnPlatform)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x + platformRb.velocity.x, myRigidbody.velocity.y);
             platfromVelWithPlayerCache = new Vector2(myRigidbody.velocity.x, platformRb.velocity.y);
-            platfromVelWithPlayerCachex = myRigidbody.velocity.x;
         }
 
         WallSlide();
