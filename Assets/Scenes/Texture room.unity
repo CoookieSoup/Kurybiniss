@@ -612,6 +612,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MovingPlatform
       objectReference: {fileID: 0}
+    - target: {fileID: 241615042817474506, guid: 780ed4c113565e24983fc703db3a1ece, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 780ed4c113565e24983fc703db3a1ece, type: 3}
 --- !u!1001 &209107675
@@ -825,6 +829,18 @@ PrefabInstance:
     - target: {fileID: 2525631937168854639, guid: 1af139237a6500c428754433c8e36b51, type: 3}
       propertyPath: m_Name
       value: Player 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525631937456668403, guid: 1af139237a6500c428754433c8e36b51, type: 3}
+      propertyPath: m_Size.x
+      value: 2.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525631937456668403, guid: 1af139237a6500c428754433c8e36b51, type: 3}
+      propertyPath: m_Size.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2525631937456668403, guid: 1af139237a6500c428754433c8e36b51, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1af139237a6500c428754433c8e36b51, type: 3}
