@@ -209,9 +209,36 @@ public class PlayerScript : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.2f, 0.2f), 0, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
+        if(myRigidbody.velocity.x < 0f && !canMove && flipX)
+        {
+            animator.SetBool("TakeDMGBack", true);
+            animator.SetBool("IsFalling", false);
+            animator.SetBool("IsJumping", false);
+
+        }
+        if (myRigidbody.velocity.x < 0f && !canMove && !flipX)
+        {
+            animator.SetBool("TakeDMGFront", true);
+            animator.SetBool("IsFalling", false);
+            animator.SetBool("IsJumping", false);
+        }
+        if (myRigidbody.velocity.x > 0f && !canMove && flipX)
+        {
+            animator.SetBool("TakeDMGFront", true);
+            animator.SetBool("IsFalling", false);
+            animator.SetBool("IsJumping", false);
+        }
+        if (myRigidbody.velocity.x > 0f && !canMove && !flipX)
+        {
+            animator.SetBool("TakeDMGBack", true);
+            animator.SetBool("IsFalling", false);
+            animator.SetBool("IsJumping", false);
+        }
         if (canMove)
         {
             myRigidbody.velocity = new Vector2(horizontal * myRigidbody.velocity.x, myRigidbody.velocity.y); //changed speedStrength to myRigidbody.velocity.x here
+            animator.SetBool("TakeDMGBack", false);
+            animator.SetBool("TakeDMGFront", false);
         }
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         if (isWallSliding) 
@@ -225,7 +252,7 @@ public class PlayerScript : MonoBehaviour
         {
             animator.SetBool("isWallSliding", false);
         }
-        if (myRigidbody.velocity.y < 0f && !isWallSliding)
+        if (myRigidbody.velocity.y < 0f && !isWallSliding && canMove)
         {
             animator.SetBool("isWallSliding", false);
             animator.SetBool("IsJumping", false);
@@ -245,17 +272,17 @@ public class PlayerScript : MonoBehaviour
         {
             canMove = true;
         }
-        if (!isGrounded && myRigidbody.velocity.y > 0f && isWallSliding)
+        if (!isGrounded && myRigidbody.velocity.y > 0f && isWallSliding && canMove)
         {
             animator.SetBool("IsJumping", true);
             animator.SetBool("isWallSliding", false);
         }
-        if (!isGrounded && myRigidbody.velocity.y > 0f)
+        if (!isGrounded && myRigidbody.velocity.y > 0f && canMove)
         {
             animator.SetBool("IsJumping", true);
         }
 
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && canMove)
         {
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpStrength);
             animator.SetBool("IsJumping", true);
