@@ -8,7 +8,7 @@ public class MovingPlatformController : MonoBehaviour
     public int Speed;
     Vector3 targetPos;
 
-    PlayerScript movementController;
+    PlayerScript playerScript;
     public Rigidbody2D rb;
     Vector3 moveDirection;
 
@@ -16,7 +16,7 @@ public class MovingPlatformController : MonoBehaviour
 
     private void Awake()
     {
-        movementController = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -58,18 +58,18 @@ public class MovingPlatformController : MonoBehaviour
         
         if (collision.CompareTag("Player"))
         {
-            movementController.isOnPlatform = true;
-            movementController.platformRb = rb;
+            playerScript.isOnPlatform = true;
+            playerScript.platformRb = rb;
         }
     }
-    //note to self play with this for momentum, if deleted close to good
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))
         {
-            movementController.isOnPlatform = false;
-            movementController.platformRb = rb;
+            playerScript.isOnPlatform = false;
+            playerScript.platformRb = rb;
         }
     }
+
     
 }

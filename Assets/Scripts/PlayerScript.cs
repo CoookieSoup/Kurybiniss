@@ -32,7 +32,7 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
     private float wallJumpingDirection;
-    private float wallJumpingTime = 0.05f;
+    private readonly float wallJumpingTime = 0.05f;
     private float wallJumpingCounter;
     private Vector2 wallJumpingPower = new Vector2(10f, 20f);
 
@@ -43,6 +43,7 @@ public class PlayerScript : MonoBehaviour
     public float currentInvincibilityTimer;
     public bool tookDamage;
     public bool canMove;
+    public float noInputTimeAfterTakingDamage = 0.5f;
 
     // Wall slide logic start
 
@@ -183,11 +184,11 @@ public class PlayerScript : MonoBehaviour
             healthBar.fillAmount = (currentHealth / maxHealth);
             if (collider.gameObject.transform.position.x < myRigidbody.position.x)
             {
-                myRigidbody.velocity = new Vector2(speedStrength, jumpStrength);
+                myRigidbody.velocity = new Vector2(20f, 40f);
             }
             if (collider.gameObject.transform.position.x > myRigidbody.position.x)
             {
-                myRigidbody.velocity = new Vector2(-speedStrength, jumpStrength);
+                myRigidbody.velocity = new Vector2(-20f, 40f);
             }
         }
     }
@@ -240,7 +241,7 @@ public class PlayerScript : MonoBehaviour
             animator.SetBool("IsFalling", false);
             jumpedOffMovingPlatform = false;
         }
-        if (currentInvincibilityTimer < defaultInvincibilityTimer - 0.5f)
+        if (currentInvincibilityTimer < defaultInvincibilityTimer - noInputTimeAfterTakingDamage)
         {
             canMove = true;
         }
