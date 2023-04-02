@@ -29,12 +29,13 @@ public class PlayerScript : MonoBehaviour
 
     public bool isWallSliding;
     public float wallSlideSpeed = 7f;
-    [SerializeField] private Transform wallCheck;
+    [SerializeField] private Transform wallCheckLeft;
+    [SerializeField] private Transform wallCheckRight;
     [SerializeField] private LayerMask wallLayer;
     private float wallJumpingDirection;
     private readonly float wallJumpingTime = 0.05f;
     private float wallJumpingCounter;
-    private Vector2 wallJumpingPower = new Vector2(10f, 20f);
+    private Vector2 wallJumpingPower = new Vector2(20f, 40f);
 
     public float maxHealth = 4f;
     public float currentHealth = 4f;
@@ -47,23 +48,34 @@ public class PlayerScript : MonoBehaviour
 
     // Wall slide logic start
 
-    private bool IsTouchingWall()
+    private bool IsTouchingWallToLeft()
     {
-        return Physics2D.OverlapBox(wallCheck.position, new Vector2(4.1f, 4f), 0, groundLayer);
+        return Physics2D.OverlapBox(wallCheckLeft.position, new Vector2(1f, 4f), 0, groundLayer);
+    }
+    private bool IsTouchingWallToRight()
+    {
+        return Physics2D.OverlapBox(wallCheckRight.position, new Vector2(1f, 4f), 0, groundLayer);
     }
 
     private void WallSlide ()
     {
-        if (IsTouchingWall() && isGrounded == false && horizontal != 0f)
+        if (IsTouchingWallToLeft() && myRigidbody.velocity.x < 0f || IsTouchingWallToRight() && myRigidbody.velocity.x > 0f)
         {
-            isWallSliding = true;
-            myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
-
+            if (!isGrounded && horizontal != 0f)
+            {
+                isWallSliding = true;
+                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
+            }
         }
         else
         {
             isWallSliding = false;
         }
+        if (Physics2D.OverlapBox(wallCheckLeft.position, new Vector2(1f, 8f), 0, groundLayer) == false && Physics2D.OverlapBox(wallCheckRight.position, new Vector2(1f, 8f), 0, groundLayer) == false)
+        {
+            isWallSliding = false;
+        }
+
     }
     // Wall slide logic end
 
@@ -72,13 +84,25 @@ public class PlayerScript : MonoBehaviour
     {
         if (isWallSliding)
         {
-            if (flipX == true)
+            if (IsTouchingWallToLeft() && myRigidbody.velocity.x < 0f)
             {
                 wallJumpingDirection = -1f;
+                flipX = true;
             }
-            if (flipX == false)
+            if (IsTouchingWallToLeft() && myRigidbody.velocity.x == 0f)
             {
                 wallJumpingDirection = 1f;
+                flipX = false;
+            }
+            if (IsTouchingWallToRight() && myRigidbody.velocity.x > 0f)
+            {
+                wallJumpingDirection = 1f;
+                flipX = false;
+            }
+            if (IsTouchingWallToRight() && myRigidbody.velocity.x == 0f)
+            {
+                wallJumpingDirection = -1f;
+                flipX = true;
             }
             wallJumpingCounter = wallJumpingTime;
         }
@@ -88,7 +112,7 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && myRigidbody.velocity.y <= 0f)
         {
-            myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x * 2, wallJumpingPower.y * 2);
+            myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
             if(flipX == false && wallJumpingDirection == -1)
             {
