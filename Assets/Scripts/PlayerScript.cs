@@ -307,6 +307,7 @@ public class PlayerScript : MonoBehaviour
                 myRigidbody.velocity = new Vector2(-speedStrength, myRigidbody.velocity.y);
             }
             sprite.flipX = true;
+            flipX = true;
         }
         //&& Mathf.Abs(myRigidbody.velocity.x) <= speedStrength
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && canMove)
@@ -324,6 +325,7 @@ public class PlayerScript : MonoBehaviour
                 myRigidbody.velocity = new Vector2(speedStrength, myRigidbody.velocity.y);
             }
             sprite.flipX = false;
+            flipX = false;
         }
         if (isOnPlatform)
         {
