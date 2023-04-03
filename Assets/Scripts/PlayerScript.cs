@@ -21,7 +21,7 @@ public class PlayerScript : MonoBehaviour
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
     public Vector2 platfromVelWithPlayerCache;
-    private bool jumpedOffMovingPlatform;
+    public bool jumpedOffMovingPlatform;
 
     public SpriteRenderer sprite;
     public Animator animator;
@@ -141,7 +141,9 @@ public class PlayerScript : MonoBehaviour
         }
         if (collision.collider.gameObject.name == "MovingPlatform")
         {
-            myRigidbody.velocity = new Vector2 (platfromVelWithPlayerCache.x, platfromVelWithPlayerCache.y + myRigidbody.velocity.y);
+            myRigidbody.velocity = new Vector2(0f, jumpStrength);
+            myRigidbody.AddForce(platfromVelWithPlayerCache, ForceMode2D.Impulse);
+           // myRigidbody.velocity = new Vector2 (platfromVelWithPlayerCache.x, platfromVelWithPlayerCache.y + myRigidbody.velocity.y);
             jumpedOffMovingPlatform = true;
         }
 
@@ -258,7 +260,7 @@ public class PlayerScript : MonoBehaviour
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
         }
-        if (canMove)
+        if (canMove && !jumpedOffMovingPlatform)
         {
             myRigidbody.velocity = new Vector2(horizontal * myRigidbody.velocity.x, myRigidbody.velocity.y); //changed speedStrength to myRigidbody.velocity.x here
             animator.SetBool("TakeDMGBack", false);
@@ -318,13 +320,9 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && canMove)
         {
-            if (myRigidbody.velocity.x > speedStrength)
+            if (myRigidbody.velocity.x > 0f)
             {
                 myRigidbody.velocity = new Vector2(-speedStrength, myRigidbody.velocity.y);
-            }
-            if (jumpedOffMovingPlatform == true && myRigidbody.velocity.x <= -speedStrength)
-            {
-                myRigidbody.velocity = new Vector2(platfromVelWithPlayerCache.x, myRigidbody.velocity.y);
             }
             if (jumpedOffMovingPlatform == false)
             {
@@ -336,18 +334,15 @@ public class PlayerScript : MonoBehaviour
         //&& Mathf.Abs(myRigidbody.velocity.x) <= speedStrength
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && canMove)
         {
-            if (myRigidbody.velocity.x < -speedStrength)
+            if (myRigidbody.velocity.x < 0f)
             {
-                myRigidbody.velocity = new Vector2 (speedStrength, myRigidbody.velocity.y);
-            }
-            if (jumpedOffMovingPlatform == true && myRigidbody.velocity.x >= speedStrength)
-            {
-                myRigidbody.velocity = new Vector2(platfromVelWithPlayerCache.x, myRigidbody.velocity.y);
+                myRigidbody.velocity = new Vector2(speedStrength, myRigidbody.velocity.y);
             }
             if (jumpedOffMovingPlatform == false)
             {
                 myRigidbody.velocity = new Vector2(speedStrength, myRigidbody.velocity.y);
             }
+
             sprite.flipX = false;
             flipX = false;
         }
