@@ -57,7 +57,7 @@ public class PlayerScript : MonoBehaviour
         return Physics2D.OverlapBox(wallCheckRight.position, new Vector2(1f, 4f), 0, groundLayer);
     }
 
-    private void WallSlide ()
+    private void WallSlide()
     {
         if (IsTouchingWallToLeft() && myRigidbody.velocity.x < 0f || IsTouchingWallToRight() && myRigidbody.velocity.x > 0f)
         {
@@ -114,7 +114,7 @@ public class PlayerScript : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
-            if(flipX == false && wallJumpingDirection == -1)
+            if (flipX == false && wallJumpingDirection == -1)
             {
                 flipX = true;
             }
@@ -143,7 +143,7 @@ public class PlayerScript : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(0f, jumpStrength);
             myRigidbody.AddForce(platfromVelWithPlayerCache, ForceMode2D.Impulse);
-           // myRigidbody.velocity = new Vector2 (platfromVelWithPlayerCache.x, platfromVelWithPlayerCache.y + myRigidbody.velocity.y);
+            // myRigidbody.velocity = new Vector2 (platfromVelWithPlayerCache.x, platfromVelWithPlayerCache.y + myRigidbody.velocity.y);
             jumpedOffMovingPlatform = true;
         }
 
@@ -235,7 +235,7 @@ public class PlayerScript : MonoBehaviour
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.2f, 0.2f), 0, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
-        if(myRigidbody.velocity.x < 0f && !canMove && flipX)
+        if (myRigidbody.velocity.x < 0f && !canMove && flipX)
         {
             animator.SetBool("TakeDMGBack", true);
             animator.SetBool("IsFalling", false);
@@ -267,14 +267,14 @@ public class PlayerScript : MonoBehaviour
             animator.SetBool("TakeDMGFront", false);
         }
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
-        if (isWallSliding) 
+        if (isWallSliding)
         {
             animator.SetBool("isWallSliding", true);
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
             jumpedOffMovingPlatform = false;
         }
-        if (!isWallSliding) 
+        if (!isWallSliding)
         {
             animator.SetBool("isWallSliding", false);
         }
@@ -288,7 +288,7 @@ public class PlayerScript : MonoBehaviour
         {
             jumpedOffMovingPlatform = false;
         }
-        if (isGrounded) 
+        if (isGrounded)
         {
             animator.SetBool("IsJumping", false);
             animator.SetBool("IsFalling", false);
@@ -364,5 +364,5 @@ public class PlayerScript : MonoBehaviour
             tookDamage = false;
         }
     }
-    
+
 }
