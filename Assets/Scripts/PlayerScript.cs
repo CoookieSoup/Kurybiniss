@@ -139,7 +139,7 @@ public class PlayerScript : MonoBehaviour
         {
             wallJumpingCounter = 0f;
         }
-        if (collision.collider.gameObject.name == "MovingPlatform")
+        if (collision.collider.gameObject.name == "MovingPlatform" && myRigidbody.velocity.y >= 0f)
         {
             myRigidbody.velocity = new Vector2(0f, jumpStrength);
             myRigidbody.AddForce(platfromVelWithPlayerCache, ForceMode2D.Impulse);
