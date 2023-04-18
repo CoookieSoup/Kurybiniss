@@ -7,7 +7,7 @@ public class GroundEnemyScript : MonoBehaviour
 {
     //RaycastHit2D hit;
     RaycastHit2D hitUpper;
-    private Transform playerPos;
+    public Transform playerPos;
     private Rigidbody2D GroundEnemyRb;
     private Transform GroundEnemyLOSCheck;
     [SerializeField] private float GroundEnemySpeedStrength = 10f;
@@ -16,22 +16,35 @@ public class GroundEnemyScript : MonoBehaviour
     public bool isGrounded;
     [SerializeField] private LayerMask groundLayer;
     public Transform groundCheck;
-
+    public PlayerScript playerScript;
+    public Collider2D enemyCollider2D;
+    public Collider2D playerCollider2D;
+    public Vector2 lastSeenPos;
+    public float currentPatrolTime = 0f;
+    public float patrolTurnAroundTime;
+    public int patrolDirection = 1;
+    public bool hasSeenPlayer = false;
+    public Vector2 patrolOrigin;
+    private bool hasReturnedToPatrolOrigin;
     // Start is called before the first frame update
     void Start()
     {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         playerPos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         GroundEnemyRb = GetComponent<Rigidbody2D>();
         GroundEnemyLOSCheck = GetComponent<Transform>();
+        enemyCollider2D = GetComponent<Collider2D>();
+        playerCollider2D = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
+        patrolOrigin = GroundEnemyLOSCheck.position;
     }
     
-    //void OnCollisionEnter2D(Collision2D collider)
-    //{
-    //if (collider.gameObject.CompareTag("Player"))
-    //{
-    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    //}
-    //}
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -49,15 +62,38 @@ public class GroundEnemyScript : MonoBehaviour
             {
                 GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
             }
+            lastSeenPos = playerPos.position;
+            hasSeenPlayer = true; ;
         }
-        
-        if (hitUpper.collider.gameObject.CompareTag("Player") == false)
+        if (!hitUpper.collider.gameObject.CompareTag("Player"))
         {
-            GroundEnemyRb.velocity = new Vector2(0f, GroundEnemyRb.velocity.y);
+            if (lastSeenPos.x - transform.position.x < -1f)
+            {
+                GroundEnemyRb.velocity = new Vector2(-GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
+            }
+            if (lastSeenPos.x - transform.position.x > 1f)
+            {
+                GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
+            }
+            if (Mathf.Abs(transform.position.x - lastSeenPos.x) <= 1f)
+            {
+                GroundEnemyRb.velocity = new Vector2(0f, GroundEnemyRb.velocity.y);
+                hasSeenPlayer = false;
+            }
         }
-        if (Mathf.Abs(playerPos.position.x - transform.position.x) >= EnemyDetectRange)
+        if (!playerScript.tookDamage)
         {
-            GroundEnemyRb.velocity = new Vector2(0f, GroundEnemyRb.velocity.y);
+            Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, false);
+        }
+        currentPatrolTime += Time.deltaTime;
+        if (currentPatrolTime >= patrolTurnAroundTime)
+        {
+            patrolDirection = patrolDirection * -1;
+            currentPatrolTime = 0f;
+        }
+        if (!hasSeenPlayer)
+        {
+            GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength * patrolDirection, GroundEnemyRb.velocity.y);
         }
     }
     

@@ -4,31 +4,51 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class FlyingEnemyScript2 : MonoBehaviour
 {
-    public float EnemyFollowSpeed = 0.5f;
+    public float EnemyFollowSpeed;
     public Transform player;
-    public SpriteRenderer playerSprite;
-    // Start is called before the first frame update
+    private Vector2 lastSeenPos;
+    public Collider2D enemyCollider2D;
+    public Collider2D playerCollider2D;
+    public PlayerScript playerScript;
+    RaycastHit2D LOSCheck;
+    public float EnemyDetectRange;
+    private bool hasSeen = false;
     void Start()
     {
+        playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerSprite = GameObject.FindGameObjectWithTag("Player").GetComponent<SpriteRenderer>();
+        enemyCollider2D = GetComponent<Collider2D>();
+        playerCollider2D = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
     }
-    void OnCollisionEnter2D (Collision2D collider)
+    void OnCollisionEnter2D(Collision2D collider)
     {
         if (collider.gameObject.CompareTag("Player"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
         }
     }
     // Update is called once per frame
     void Update()
     {
-        if (playerSprite.flipX && transform.position.x > player.position.x || !playerSprite.flipX && transform.position.x < player.position.x)
+        LOSCheck = Physics2D.Raycast(transform.position, player.position - transform.position);
+        Debug.DrawRay(transform.position, player.position - transform.position);
+        if (LOSCheck.collider.gameObject.CompareTag("Player") && Mathf.Abs(player.position.x - transform.position.x) < EnemyDetectRange)
         {
-            Vector3 newPos = new Vector3(player.position.x, player.position.y, 0f);
-            transform.position = Vector3.Slerp(transform.position, newPos, EnemyFollowSpeed * Time.deltaTime);
+            Vector2 newPos = new Vector2(player.position.x, player.position.y);
+            transform.position = Vector3.MoveTowards(transform.position, newPos, EnemyFollowSpeed * Time.deltaTime);
+            lastSeenPos = player.position;
+            hasSeen = true;
         }
-        
+        else {
+            if (hasSeen)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, lastSeenPos, EnemyFollowSpeed * Time.deltaTime);
+            }
+        }
+        if (!playerScript.tookDamage)
+        {
+            Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, false);
+        }
     }
     
 }
