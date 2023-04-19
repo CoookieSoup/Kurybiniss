@@ -75,7 +75,10 @@ public class PlayerScript : MonoBehaviour
         {
             isWallSliding = false;
         }
-
+        if (isGrounded)
+        {
+            animator.SetBool("isWallSliding", false);
+        }
     }
     // Wall slide logic end
 
@@ -143,7 +146,6 @@ public class PlayerScript : MonoBehaviour
         {
             myRigidbody.velocity = new Vector2(0f, jumpStrength);
             myRigidbody.AddForce(platfromVelWithPlayerCache, ForceMode2D.Impulse);
-            // myRigidbody.velocity = new Vector2 (platfromVelWithPlayerCache.x, platfromVelWithPlayerCache.y + myRigidbody.velocity.y);
             jumpedOffMovingPlatform = true;
         }
 
@@ -240,25 +242,28 @@ public class PlayerScript : MonoBehaviour
             animator.SetBool("TakeDMGBack", true);
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
-
+            animator.SetBool("TakeDMGFront", false);
         }
         if (myRigidbody.velocity.x < 0f && !canMove && !flipX)
         {
             animator.SetBool("TakeDMGFront", true);
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
+            animator.SetBool("TakeDMGBack", false);
         }
         if (myRigidbody.velocity.x > 0f && !canMove && flipX)
         {
             animator.SetBool("TakeDMGFront", true);
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
+            animator.SetBool("TakeDMGBack", false);
         }
         if (myRigidbody.velocity.x > 0f && !canMove && !flipX)
         {
             animator.SetBool("TakeDMGBack", true);
             animator.SetBool("IsFalling", false);
             animator.SetBool("IsJumping", false);
+            animator.SetBool("TakeDMGFront", false);
         }
         if (canMove && !jumpedOffMovingPlatform)
         {
