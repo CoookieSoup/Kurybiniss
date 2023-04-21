@@ -33,17 +33,17 @@ public class PlayerScript : MonoBehaviour
     [SerializeField] private Transform wallCheckRight;
     [SerializeField] private LayerMask wallLayer;
     private float wallJumpingDirection;
-    private readonly float wallJumpingTime = 0.05f;
+    public float wallJumpingTime = 0.15f;
     private float wallJumpingCounter;
     private Vector2 wallJumpingPower = new Vector2(20f, 40f);
 
-    public float maxHealth = 4f;
-    public float currentHealth = 4f;
+    private float maxHealth = 4f;
+    private float currentHealth = 4f;
     [SerializeField] private Image healthBar;
-    public float defaultInvincibilityTimer;
-    public float currentInvincibilityTimer;
-    public bool tookDamage;
-    public bool canMove;
+    private float defaultInvincibilityTimer;
+    private float currentInvincibilityTimer;
+    [HideInInspector] public bool tookDamage;
+    private bool canMove;
     public float noInputTimeAfterTakingDamage = 0.5f;
 
     // Wall slide logic start
