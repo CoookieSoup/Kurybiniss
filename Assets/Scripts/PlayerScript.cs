@@ -39,11 +39,11 @@ public class PlayerScript : MonoBehaviour
 
     private float maxHealth = 4f;
     private float currentHealth = 4f;
-    [SerializeField] private Image healthBar;
-    private float defaultInvincibilityTimer;
-    private float currentInvincibilityTimer;
-    [HideInInspector] public bool tookDamage;
-    private bool canMove;
+    public Image healthBar;
+    public float defaultInvincibilityTimer;
+    public float currentInvincibilityTimer;
+    public bool tookDamage;
+    public bool canMove;
     public float noInputTimeAfterTakingDamage = 0.5f;
 
     // Wall slide logic start

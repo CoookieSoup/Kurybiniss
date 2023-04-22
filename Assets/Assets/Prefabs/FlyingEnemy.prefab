@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5391069575864511893}
   m_Layer: 6
   m_Name: FlyingEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,9 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0274a1be7dbb6f5409ef4e03f471339c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyFollowSpeed: 0.5
+  EnemyFollowSpeed: 10
   player: {fileID: 0}
-  playerSprite: {fileID: 0}
+  enemyCollider2D: {fileID: 0}
+  playerCollider2D: {fileID: 0}
+  playerScript: {fileID: 0}
+  EnemyDetectRange: 40
 --- !u!212 &5391069575864511890
 SpriteRenderer:
   m_ObjectHideFlags: 0

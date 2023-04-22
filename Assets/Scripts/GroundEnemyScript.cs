@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GroundEnemyScript : MonoBehaviour
 {
     //RaycastHit2D hit;
-    RaycastHit2D hitUpper;
+    public RaycastHit2D hitUpper;
     public Transform playerPos;
     private Rigidbody2D GroundEnemyRb;
     private Transform GroundEnemyLOSCheck;
@@ -50,17 +50,21 @@ public class GroundEnemyScript : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.2f, 0.2f), 0, groundLayer);
-        hitUpper = Physics2D.Raycast(new Vector3 (GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position);
-        Debug.DrawRay(new Vector3(GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position, Color.green);
+        hitUpper = Physics2D.Raycast(new Vector2 (GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position);
+        Debug.DrawRay(new Vector2(GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position, Color.green);
         if (hitUpper.collider.gameObject.CompareTag("Player") && Mathf.Abs(playerPos.position.x - transform.position.x) < EnemyDetectRange) //31
         {
-            if (playerPos.position.x - transform.position.x < 0f)
+            if (playerPos.position.x - transform.position.x < -1f)
             {
                 GroundEnemyRb.velocity = new Vector2(-GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
             }
-            if (playerPos.position.x - transform.position.x > 0f)
+            if (playerPos.position.x - transform.position.x > 1f)
             {
                 GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
+            }
+            if (Mathf.Abs(playerPos.position.x - transform.position.x) <= 1f)
+            {
+                GroundEnemyRb.velocity = new Vector2(0f, GroundEnemyRb.velocity.y);
             }
             lastSeenPos = playerPos.position;
             hasSeenPlayer = true; ;
