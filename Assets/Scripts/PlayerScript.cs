@@ -38,7 +38,7 @@ public class PlayerScript : MonoBehaviour
     private Vector2 wallJumpingPower = new Vector2(20f, 40f);
 
     private float maxHealth = 4f;
-    private float currentHealth = 4f;
+    private float currentHealth = 2f;
     public Image healthBar;
     public float defaultInvincibilityTimer;
     public float currentInvincibilityTimer;
@@ -229,6 +229,7 @@ public class PlayerScript : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         currentInvincibilityTimer = defaultInvincibilityTimer;
         canMove = true;
+        healthBar.fillAmount = (currentHealth / maxHealth);
     }
 
 
@@ -367,6 +368,11 @@ public class PlayerScript : MonoBehaviour
         if (currentInvincibilityTimer <= 0f)
         {
             tookDamage = false;
+        }
+        if (isGrounded)
+        {
+            animator.SetBool("isWallSliding", false);
+            isWallSliding = false;
         }
     }
 
