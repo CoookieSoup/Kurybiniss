@@ -26,6 +26,7 @@ public class GroundEnemyScript : MonoBehaviour
     public bool hasSeenPlayer = false;
     public Vector2 patrolOrigin;
     private bool hasReturnedToPatrolOrigin;
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +53,14 @@ public class GroundEnemyScript : MonoBehaviour
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.2f, 0.2f), 0, groundLayer);
         hitUpper = Physics2D.Raycast(new Vector2 (GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position);
         Debug.DrawRay(new Vector2(GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position, Color.green);
+        if (GroundEnemyRb.velocity.x != 0)
+        {
+            animator.SetBool("GolemSpeed", true);
+        }
+        if (GroundEnemyRb.velocity.x == 0)
+        {
+            animator.SetBool("GolemSpeed", false);
+        }
         if (hitUpper.collider.gameObject.CompareTag("Player") && Mathf.Abs(playerPos.position.x - transform.position.x) < EnemyDetectRange) //31
         {
             if (playerPos.position.x - transform.position.x < -1f)
