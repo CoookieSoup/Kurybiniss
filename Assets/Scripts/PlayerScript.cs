@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     public bool isGrounded;
+    public LayerMask enemyLayer;
 
     public bool isOnPlatform;
     public Rigidbody2D platformRb;
@@ -221,7 +222,7 @@ public class PlayerScript : MonoBehaviour
         }
     }
     // Health system end
-
+    
     // Start is called before the first frame update
     void Start()
     {
