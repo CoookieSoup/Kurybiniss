@@ -37,6 +37,9 @@ public class PlayerScript : MonoBehaviour
     public float wallJumpingTime = 0.15f;
     private float wallJumpingCounter;
     private Vector2 wallJumpingPower = new Vector2(20f, 40f);
+    public float lastWallslidedWallX;
+    public float currentNoWallSlideOnSameWallTimer;
+    public float defaultNoWallSlideOnSameWallTimer;
 
     private float maxHealth = 4f;
     private float currentHealth = 2f;
@@ -62,14 +65,19 @@ public class PlayerScript : MonoBehaviour
     {
         if (IsTouchingWallToLeft() && myRigidbody.velocity.x < 0f || IsTouchingWallToRight() && myRigidbody.velocity.x > 0f)
         {
-            if (!isGrounded && horizontal != 0f)
+            if (!isGrounded && horizontal != 0f )
             {
-                isWallSliding = true;
-                myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
+                if (currentNoWallSlideOnSameWallTimer > 0f && transform.position.x < lastWallslidedWallX -0.5f || currentNoWallSlideOnSameWallTimer > 0f && transform.position.x >  lastWallslidedWallX + 0.5f || transform.position.x < lastWallslidedWallX - 0.5f || transform.position.x > lastWallslidedWallX + 0.5f || transform.position.x > lastWallslidedWallX - 1f && currentNoWallSlideOnSameWallTimer == defaultNoWallSlideOnSameWallTimer || transform.position.x < lastWallslidedWallX + 1f && currentNoWallSlideOnSameWallTimer == defaultNoWallSlideOnSameWallTimer) {
+                    isWallSliding = true;
+                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
+                    lastWallslidedWallX = transform.position.x;
+                    currentNoWallSlideOnSameWallTimer = defaultNoWallSlideOnSameWallTimer;
+                }
             }
         }
         else
         {
+            currentNoWallSlideOnSameWallTimer -= Time.deltaTime;
             isWallSliding = false;
         }
         if (Physics2D.OverlapBox(wallCheckLeft.position, new Vector2(1f, 8f), 0, groundLayer) == false && Physics2D.OverlapBox(wallCheckRight.position, new Vector2(1f, 8f), 0, groundLayer) == false)
@@ -116,6 +124,8 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && myRigidbody.velocity.y <= 0f)
         {
+            transform.position = new Vector2(-0.5f * wallJumpingDirection + transform.position.x, transform.position.y);
+            isWallSliding = false;
             myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
             if (flipX == false && wallJumpingDirection == -1)
@@ -143,7 +153,7 @@ public class PlayerScript : MonoBehaviour
         {
             wallJumpingCounter = 0f;
         }
-        if (collision.collider.gameObject.name == "MovingPlatform" && myRigidbody.velocity.y >= 0f && !isWallSliding)
+        if (collision.collider.gameObject.name == "MovingPlatform" && myRigidbody.velocity.y >= 0f && !isWallSliding && Mathf.Abs(myRigidbody.velocity.x) < Mathf.Abs(platfromVelWithPlayerCache.x))
         {
             myRigidbody.velocity = new Vector2(0f, jumpStrength);
             myRigidbody.AddForce(platfromVelWithPlayerCache, ForceMode2D.Impulse);
@@ -231,12 +241,17 @@ public class PlayerScript : MonoBehaviour
         currentInvincibilityTimer = defaultInvincibilityTimer;
         canMove = true;
         healthBar.fillAmount = (currentHealth / maxHealth);
+        currentNoWallSlideOnSameWallTimer = 0f;
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        if (currentNoWallSlideOnSameWallTimer <= 0f)
+        {
+            lastWallslidedWallX = 1000000f;
+        }
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.2f, 0.2f), 0, groundLayer);
         horizontal = Input.GetAxisRaw("Horizontal");
         if (myRigidbody.velocity.x < 0f && !canMove && flipX)
@@ -338,7 +353,6 @@ public class PlayerScript : MonoBehaviour
             sprite.flipX = true;
             flipX = true;
         }
-        //&& Mathf.Abs(myRigidbody.velocity.x) <= speedStrength
         if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A) && canMove)
         {
             if (myRigidbody.velocity.x < 0f)
@@ -358,7 +372,6 @@ public class PlayerScript : MonoBehaviour
             myRigidbody.velocity = new Vector2(myRigidbody.velocity.x + platformRb.velocity.x, myRigidbody.velocity.y);
             platfromVelWithPlayerCache = new Vector2(myRigidbody.velocity.x, platformRb.velocity.y);
         }
-
         WallSlide();
         WallJump();
         ExtendedJump();
@@ -375,6 +388,7 @@ public class PlayerScript : MonoBehaviour
             animator.SetBool("isWallSliding", false);
             isWallSliding = false;
         }
+
     }
 
 }

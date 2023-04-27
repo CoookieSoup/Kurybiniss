@@ -386,7 +386,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5350855845736329099, guid: 21e89d082d363e540a15bd53d14a6970, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -600.2
+      value: -604.91
       objectReference: {fileID: 0}
     - target: {fileID: 5350855845736329099, guid: 21e89d082d363e540a15bd53d14a6970, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7763,11 +7763,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5620925119067499303, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -536.4
+      value: -776.5
       objectReference: {fileID: 0}
     - target: {fileID: 5620925119067499303, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 79.7
+      value: 53.1
       objectReference: {fileID: 0}
     - target: {fileID: 5620925119067499303, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7805,5 +7805,17 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 797804593}
+    - target: {fileID: 5620925119067499305, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
+      propertyPath: defaultWallJumpNoTurnAroundTimer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620925119067499305, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
+      propertyPath: currentNoWallSlideOnSameWallTimer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5620925119067499305, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
+      propertyPath: defaultNoWallSlideOnSameWallTimer
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
