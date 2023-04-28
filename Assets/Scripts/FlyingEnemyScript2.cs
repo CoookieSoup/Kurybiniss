@@ -13,12 +13,14 @@ public class FlyingEnemyScript2 : MonoBehaviour
     RaycastHit2D LOSCheck;
     public float EnemyDetectRange;
     private bool hasSeen = false;
+    public Rigidbody2D rigidBody2D;
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemyCollider2D = GetComponent<Collider2D>();
         playerCollider2D = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
+        rigidBody2D = GetComponent<Rigidbody2D>();
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
@@ -26,6 +28,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
         {
             Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
         }
+        
     }
     // Update is called once per frame
     void Update()
@@ -49,6 +52,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
         {
             Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, false);
         }
+        
     }
     
 }

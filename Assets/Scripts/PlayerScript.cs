@@ -40,6 +40,8 @@ public class PlayerScript : MonoBehaviour
     public float lastWallslidedWallX;
     public float currentNoWallSlideOnSameWallTimer;
     public float defaultNoWallSlideOnSameWallTimer;
+    public bool hasExitedWallSlideZone = false;
+    public float lastWallJumpY;
 
     private float maxHealth = 4f;
     private float currentHealth = 2f;
@@ -67,18 +69,22 @@ public class PlayerScript : MonoBehaviour
         {
             if (!isGrounded && horizontal != 0f )
             {
-                if (currentNoWallSlideOnSameWallTimer > 0f && transform.position.x < lastWallslidedWallX -0.5f || currentNoWallSlideOnSameWallTimer > 0f && transform.position.x >  lastWallslidedWallX + 0.5f || transform.position.x < lastWallslidedWallX - 0.5f || transform.position.x > lastWallslidedWallX + 0.5f || transform.position.x > lastWallslidedWallX - 1f && currentNoWallSlideOnSameWallTimer == defaultNoWallSlideOnSameWallTimer || transform.position.x < lastWallslidedWallX + 1f && currentNoWallSlideOnSameWallTimer == defaultNoWallSlideOnSameWallTimer) {
-                    isWallSliding = true;
-                    myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
-                    lastWallslidedWallX = transform.position.x;
-                    currentNoWallSlideOnSameWallTimer = defaultNoWallSlideOnSameWallTimer;
-                }
+                    if (currentNoWallSlideOnSameWallTimer > 0f && transform.position.x < lastWallslidedWallX - 1f || currentNoWallSlideOnSameWallTimer > 0f && transform.position.x > lastWallslidedWallX + 1f || transform.position.x < lastWallslidedWallX - 1f || transform.position.x > lastWallslidedWallX + 1f || transform.position.x > lastWallslidedWallX - 1f && currentNoWallSlideOnSameWallTimer == defaultNoWallSlideOnSameWallTimer || transform.position.x < lastWallslidedWallX + 1f && currentNoWallSlideOnSameWallTimer == defaultNoWallSlideOnSameWallTimer) {
+                        isWallSliding = true;
+                        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, Mathf.Clamp(myRigidbody.velocity.y, -wallSlideSpeed, float.MaxValue));
+                        lastWallslidedWallX = transform.position.x;
+                        currentNoWallSlideOnSameWallTimer = defaultNoWallSlideOnSameWallTimer;
+                    }
             }
         }
         else
         {
             currentNoWallSlideOnSameWallTimer -= Time.deltaTime;
             isWallSliding = false;
+        }
+        if (lastWallJumpY - transform.position.y > 10f)
+        {
+            currentNoWallSlideOnSameWallTimer = -1f;
         }
         if (Physics2D.OverlapBox(wallCheckLeft.position, new Vector2(1f, 8f), 0, groundLayer) == false && Physics2D.OverlapBox(wallCheckRight.position, new Vector2(1f, 8f), 0, groundLayer) == false)
         {
@@ -87,6 +93,8 @@ public class PlayerScript : MonoBehaviour
         if (isGrounded)
         {
             animator.SetBool("isWallSliding", false);
+            currentNoWallSlideOnSameWallTimer = defaultNoWallSlideOnSameWallTimer;
+            lastWallslidedWallX = 100000f;
         }
     }
     // Wall slide logic end
@@ -96,6 +104,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (isWallSliding)
         {
+            hasExitedWallSlideZone = false;
             if (IsTouchingWallToLeft() && myRigidbody.velocity.x < 0f)
             {
                 wallJumpingDirection = -1f;
@@ -124,10 +133,13 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetButtonDown("Jump") && wallJumpingCounter > 0f && myRigidbody.velocity.y <= 0f)
         {
-            transform.position = new Vector2(-0.5f * wallJumpingDirection + transform.position.x, transform.position.y);
+            transform.position = new Vector2(-1f * wallJumpingDirection + transform.position.x, transform.position.y);
             isWallSliding = false;
             myRigidbody.velocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
             wallJumpingCounter = 0f;
+            hasExitedWallSlideZone = true;
+            lastWallJumpY = transform.position.y;
+            currentNoWallSlideOnSameWallTimer = defaultNoWallSlideOnSameWallTimer;
             if (flipX == false && wallJumpingDirection == -1)
             {
                 flipX = true;

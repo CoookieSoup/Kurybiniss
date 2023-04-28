@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5391069575864511891}
   - component: {fileID: 5391069575864511890}
   - component: {fileID: 5391069575864511893}
-  - component: {fileID: 3017203164438128674}
   m_Layer: 6
   m_Name: FlyingEnemy
   m_TagString: Enemy
@@ -53,6 +52,7 @@ MonoBehaviour:
   playerCollider2D: {fileID: 0}
   playerScript: {fileID: 0}
   EnemyDetectRange: 40
+  rigidBody2D: {fileID: 0}
 --- !u!212 &5391069575864511890
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -131,24 +131,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 5.54, y: 2.33}
   m_EdgeRadius: 0
---- !u!50 &3017203164438128674
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5391069575864511892}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
