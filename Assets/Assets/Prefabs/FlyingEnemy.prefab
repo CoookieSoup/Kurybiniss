@@ -53,6 +53,12 @@ MonoBehaviour:
   playerScript: {fileID: 0}
   EnemyDetectRange: 40
   rigidBody2D: {fileID: 0}
+  hasBeenHit: 0
+  currentKnockbackDuration: 0
+  defaultKnockbackDuration: 2
+  hasResetKnockbackDuration: 0
+  knockbackOrigin: {x: 0, y: 0}
+  knockbackMultiplier: 1.5
 --- !u!212 &5391069575864511890
 SpriteRenderer:
   m_ObjectHideFlags: 0

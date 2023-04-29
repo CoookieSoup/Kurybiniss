@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackCheckLeftScript : MonoBehaviour
+public class AttackCheckRightScript : MonoBehaviour
 {
     PlayerScript playerScript;
     FlyingEnemyScript2 flyingEnemyScript;
@@ -16,7 +16,7 @@ public class AttackCheckLeftScript : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (Input.GetKey(KeyCode.Mouse0) && playerScript.flipX)
+            if (Input.GetKey(KeyCode.Mouse0) && !playerScript.flipX)
             {
                 flyingEnemyScript = collision.GetComponent<FlyingEnemyScript2>();
                 flyingEnemyScript.hasBeenHit = true;
@@ -27,6 +27,6 @@ public class AttackCheckLeftScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

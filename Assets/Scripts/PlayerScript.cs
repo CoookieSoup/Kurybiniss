@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
-    public Rigidbody2D myRigidbody;
+    [HideInInspector] public Rigidbody2D myRigidbody;
     public float jumpStrength;
     public float speedStrength;
     private float horizontal;
@@ -14,14 +14,13 @@ public class PlayerScript : MonoBehaviour
     private float jumpCounter;
     private bool hasJumped = false;
 
-    public Transform groundCheck;
+    [HideInInspector] public Transform groundCheck;
     public LayerMask groundLayer;
     public bool isGrounded;
-    public LayerMask enemyLayer;
 
     public bool isOnPlatform;
-    public Rigidbody2D platformRb;
-    public Vector2 platfromVelWithPlayerCache;
+    [HideInInspector] public Rigidbody2D platformRb;
+    [HideInInspector] public Vector2 platfromVelWithPlayerCache;
     public bool jumpedOffMovingPlatform;
 
     public SpriteRenderer sprite;
@@ -32,22 +31,22 @@ public class PlayerScript : MonoBehaviour
     public float wallSlideSpeed = 7f;
     [SerializeField] private Transform wallCheckLeft;
     [SerializeField] private Transform wallCheckRight;
-    [SerializeField] private LayerMask wallLayer;
+    public LayerMask wallLayer;
     private float wallJumpingDirection;
     public float wallJumpingTime = 0.15f;
     private float wallJumpingCounter;
     private Vector2 wallJumpingPower = new Vector2(20f, 40f);
     public float lastWallslidedWallX;
-    public float currentNoWallSlideOnSameWallTimer;
+    private float currentNoWallSlideOnSameWallTimer;
     public float defaultNoWallSlideOnSameWallTimer;
     public bool hasExitedWallSlideZone = false;
     public float lastWallJumpY;
 
-    private float maxHealth = 4f;
-    private float currentHealth = 2f;
+    public float maxHealth = 4f;
+    public float currentHealth = 2f;
     public Image healthBar;
     public float defaultInvincibilityTimer;
-    public float currentInvincibilityTimer;
+    private float currentInvincibilityTimer;
     public bool tookDamage;
     public bool canMove;
     public float noInputTimeAfterTakingDamage = 0.5f;

@@ -6902,11 +6902,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391069575864511888, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -576.89
+      value: -573.42
       objectReference: {fileID: 0}
     - target: {fileID: 5391069575864511888, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 79.64
+      value: 83.3
       objectReference: {fileID: 0}
     - target: {fileID: 5391069575864511888, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7729,17 +7729,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5620925118196009939, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5620925119067499303, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
       propertyPath: m_RootOrder
       value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 5620925119067499303, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -578.61
+      value: -567.86
       objectReference: {fileID: 0}
     - target: {fileID: 5620925119067499303, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 59.85
+      value: 62.91
       objectReference: {fileID: 0}
     - target: {fileID: 5620925119067499303, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7777,6 +7781,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 797804593}
+    - target: {fileID: 5620925119067499305, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
+      propertyPath: currentHealth
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5620925119067499305, guid: 4781f9fb8ee513346af5c75689161e71, type: 3}
       propertyPath: defaultWallJumpNoTurnAroundTimer
       value: 2
