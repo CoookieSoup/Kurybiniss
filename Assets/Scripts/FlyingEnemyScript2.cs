@@ -22,6 +22,8 @@ public class FlyingEnemyScript2 : MonoBehaviour
     public float knockbackMultiplier;
     public SpriteRenderer sprite;
     public bool Flipx = false;
+    public int currentHealth;
+    public int maxHealth = 3;
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -31,6 +33,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
         rigidBody2D = GetComponent<Rigidbody2D>();
         currentKnockbackDuration = -1f;
         sprite = GetComponent<SpriteRenderer>();
+        currentHealth = maxHealth;
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
@@ -38,12 +41,16 @@ public class FlyingEnemyScript2 : MonoBehaviour
         {
             Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
         }
-        if (Physics2D.IsTouchingLayers(enemyCollider2D, playerScript.wallLayer))
+        if (collider.gameObject.CompareTag("Ground"))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, lastSeenPos, EnemyFollowSpeed * Time.deltaTime);
+        }
+        /*if (Physics2D.IsTouchingLayers(enemyCollider2D, playerScript.wallLayer))
         {
             hasBeenHit = false;
             currentKnockbackDuration = defaultKnockbackDuration;
             hasResetKnockbackDuration = true;
-        }
+        }*/
     }
     // Update is called once per frame
     void Update()
