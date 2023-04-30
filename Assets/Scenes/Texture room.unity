@@ -1517,11 +1517,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5391069575864511888, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -934.5
+      value: -863.7
       objectReference: {fileID: 0}
     - target: {fileID: 5391069575864511888, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.9
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 5391069575864511888, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1574,6 +1574,14 @@ PrefabInstance:
     - target: {fileID: 5391069575864511892, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
       propertyPath: m_Name
       value: FlyingEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391069575864511893, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 10.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 5391069575864511893, guid: c0e011f1f52cb71458a3f20f2b8c1146, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 10.14
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
