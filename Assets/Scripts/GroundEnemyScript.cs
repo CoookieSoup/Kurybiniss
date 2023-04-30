@@ -26,6 +26,7 @@ public class GroundEnemyScript : MonoBehaviour
     public bool hasSeenPlayer = false;
     public Vector2 patrolOrigin;
     private bool hasReturnedToPatrolOrigin;
+    public SpriteRenderer sprite;
     //public Animator animator;
     // Start is called before the first frame update
     void Start()
@@ -37,6 +38,7 @@ public class GroundEnemyScript : MonoBehaviour
         enemyCollider2D = GetComponent<Collider2D>();
         playerCollider2D = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
         patrolOrigin = GroundEnemyLOSCheck.position;
+        sprite = GetComponent<SpriteRenderer>();
     }
     
     void OnCollisionEnter2D(Collision2D collider)
@@ -111,6 +113,14 @@ public class GroundEnemyScript : MonoBehaviour
         if (!hasSeenPlayer)
         {
             GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength * patrolDirection, GroundEnemyRb.velocity.y);
+        }
+        if (GroundEnemyRb.velocity.x > 0f)
+        {
+            sprite.flipX = false;
+        }
+        if (GroundEnemyRb.velocity.x < 0f)
+        {
+            sprite.flipX = true;
         }
     }
     

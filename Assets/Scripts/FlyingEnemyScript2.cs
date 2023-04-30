@@ -20,6 +20,8 @@ public class FlyingEnemyScript2 : MonoBehaviour
     [HideInInspector] public bool hasResetKnockbackDuration;
     [HideInInspector] public Vector2 knockbackOrigin;
     public float knockbackMultiplier;
+    public SpriteRenderer sprite;
+    public bool Flipx = false;
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -28,6 +30,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
         playerCollider2D = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
         rigidBody2D = GetComponent<Rigidbody2D>();
         currentKnockbackDuration = -1f;
+        sprite = GetComponent<SpriteRenderer>();
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
@@ -53,11 +56,27 @@ public class FlyingEnemyScript2 : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, newPos, EnemyFollowSpeed * Time.deltaTime);
             lastSeenPos = player.position;
             hasSeen = true;
+            if (transform.position.x < newPos.x)
+            {
+                Flipx = true;
+            }
+            if (transform.position.x > newPos.x)
+            {
+                Flipx = false;
+            }
         }
         else {
             if (hasSeen && !hasBeenHit)
             {
                 transform.position = Vector3.MoveTowards(transform.position, lastSeenPos, EnemyFollowSpeed * Time.deltaTime);
+                if (transform.position.x < lastSeenPos.x)
+                {
+                    Flipx = true;
+                }
+                if (transform.position.x > lastSeenPos.x)
+                {
+                    Flipx = false;
+                }
             }
         }
         if (!playerScript.tookDamage)
@@ -69,12 +88,28 @@ public class FlyingEnemyScript2 : MonoBehaviour
             currentKnockbackDuration -= Time.deltaTime;
             hasResetKnockbackDuration = false;
             transform.position = Vector3.MoveTowards(transform.position, new Vector2(transform.position.x + (transform.position.x - knockbackOrigin.x), transform.position.y + (transform.position.y - knockbackOrigin.y)), knockbackMultiplier * EnemyFollowSpeed * Time.deltaTime);
+            if (transform.position.x < knockbackOrigin.x)
+            {
+                Flipx = true;
+            }
+            if (transform.position.x > knockbackOrigin.x)
+            {
+                Flipx = false;
+            }
         }
         if (currentKnockbackDuration < 0f && !hasResetKnockbackDuration)
         {
             hasBeenHit = false;
             currentKnockbackDuration = defaultKnockbackDuration;
             hasResetKnockbackDuration = true;
+        }
+        if (!Flipx)
+        {
+            sprite.flipX = false;
+        }
+        if (Flipx)
+        {
+            sprite.flipX = true;
         }
     }
     
