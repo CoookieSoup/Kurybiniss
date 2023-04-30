@@ -61,6 +61,10 @@ public class GroundEnemyScript : MonoBehaviour
         //{
             //animator.SetBool("GolemSpeed", false);
         //}
+        if (playerScript.tookDamage)
+        {
+            Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
+        }
         if (hitUpper.collider.gameObject.CompareTag("Player") && Mathf.Abs(playerPos.position.x - transform.position.x) < EnemyDetectRange) //31
         {
             if (playerPos.position.x - transform.position.x < -1f)

@@ -51,6 +51,11 @@ public class PlayerScript : MonoBehaviour
     public bool canMove;
     public float noInputTimeAfterTakingDamage = 0.5f;
 
+    CheckPointSystem checkPointSystem;
+
+    public Transform cameraPos; 
+
+
     // Wall slide logic start
 
     private bool IsTouchingWallToLeft()
@@ -229,6 +234,7 @@ public class PlayerScript : MonoBehaviour
             currentHealth--;
             if (currentHealth <= 0)
             {
+                checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             healthBar.fillAmount = (currentHealth / maxHealth);
@@ -253,8 +259,15 @@ public class PlayerScript : MonoBehaviour
         canMove = true;
         healthBar.fillAmount = (currentHealth / maxHealth);
         currentNoWallSlideOnSameWallTimer = 0f;
+        checkPointSystem = GameObject.FindGameObjectWithTag("CheckpointSystem").GetComponent<CheckPointSystem>();
+        cameraPos = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+        if (checkPointSystem.lastCheckpointPos.x != 0f && checkPointSystem.lastCheckpointPos.y != 0f)
+        {
+            transform.position = checkPointSystem.lastCheckpointPos;
+            cameraPos.position = checkPointSystem.lastCheckpointPos;
+        }
+        
     }
-
 
     // Update is called once per frame
     void Update()
