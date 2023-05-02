@@ -35,8 +35,8 @@ public class FlyingEnemyScript2 : MonoBehaviour
         currentKnockbackDuration = -1f;
         sprite = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
-        enemyLayer = GetComponent<LayerMask>();
-        Physics2D.IgnoreLayerCollision(enemyLayer, playerScript.wallLayer, false);
+        Physics2D.IgnoreLayerCollision(enemyLayer, playerScript.wallLayer, true);
+        Physics2D.IgnoreLayerCollision(enemyLayer, enemyLayer, true);
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
@@ -44,16 +44,11 @@ public class FlyingEnemyScript2 : MonoBehaviour
         {
             Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
         }
-        if (collider.gameObject.CompareTag("Ground"))
+        if (collider.gameObject.CompareTag("Ground") && !hasBeenHit)
         {
             hasBeenHit = false;
         }
-        /*if (Physics2D.IsTouchingLayers(enemyCollider2D, playerScript.wallLayer))
-        {
-            hasBeenHit = false;
-            currentKnockbackDuration = defaultKnockbackDuration;
-            hasResetKnockbackDuration = true;
-        }*/
+
     }
     // Update is called once per frame
     void Update()
