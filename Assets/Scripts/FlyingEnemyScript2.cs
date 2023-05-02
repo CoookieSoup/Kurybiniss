@@ -24,6 +24,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
     public bool Flipx = false;
     public int currentHealth;
     public int maxHealth = 3;
+    public LayerMask enemyLayer;
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -34,6 +35,8 @@ public class FlyingEnemyScript2 : MonoBehaviour
         currentKnockbackDuration = -1f;
         sprite = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
+        enemyLayer = GetComponent<LayerMask>();
+        Physics2D.IgnoreLayerCollision(enemyLayer, playerScript.wallLayer, false);
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
@@ -43,7 +46,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
         }
         if (collider.gameObject.CompareTag("Ground"))
         {
-            transform.position = Vector3.MoveTowards(transform.position, lastSeenPos, EnemyFollowSpeed * Time.deltaTime);
+            hasBeenHit = false;
         }
         /*if (Physics2D.IsTouchingLayers(enemyCollider2D, playerScript.wallLayer))
         {
@@ -92,6 +95,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
         }
         if (hasBeenHit)
         {
+            Physics2D.IgnoreLayerCollision(enemyLayer, playerScript.wallLayer, true);
             currentKnockbackDuration -= Time.deltaTime;
             hasResetKnockbackDuration = false;
             transform.position = Vector3.MoveTowards(transform.position, new Vector2(transform.position.x + (transform.position.x - knockbackOrigin.x), transform.position.y + (transform.position.y - knockbackOrigin.y)), knockbackMultiplier * EnemyFollowSpeed * Time.deltaTime);
