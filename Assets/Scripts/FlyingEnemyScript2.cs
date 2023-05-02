@@ -121,6 +121,10 @@ public class FlyingEnemyScript2 : MonoBehaviour
         {
             sprite.flipX = true;
         }
+        if (currentHealth <= 0f)
+        {
+            Destroy(gameObject);
+        }
     }
     
 }

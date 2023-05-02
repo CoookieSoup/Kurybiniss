@@ -16,17 +16,13 @@ public class AttackCheckLeftScript : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (Input.GetKey(KeyCode.Mouse0) && playerScript.flipX )
+            if (Input.GetButtonDown("Fire1") && playerScript.flipX )
             {
                 flyingEnemyScript = collision.GetComponent<FlyingEnemyScript2>();
                 flyingEnemyScript.hasBeenHit = true;
                 flyingEnemyScript.knockbackOrigin = playerTransform.position;
+                flyingEnemyScript.currentHealth--;
             }
         }
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

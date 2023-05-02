@@ -43,7 +43,7 @@ public class PlayerScript : MonoBehaviour
     public float lastWallJumpY;
 
     public float maxHealth = 4f;
-    public float currentHealth = 2f;
+    public float currentHealth;
     public Image healthBar;
     public float defaultInvincibilityTimer;
     private float currentInvincibilityTimer;
@@ -211,6 +211,8 @@ public class PlayerScript : MonoBehaviour
             currentHealth--;
             if (currentHealth <= 0)
             {
+                PlayerPrefs.SetFloat("currentHealth", 0f);
+                checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             healthBar.fillAmount = (currentHealth / maxHealth);
@@ -234,6 +236,7 @@ public class PlayerScript : MonoBehaviour
             currentHealth--;
             if (currentHealth <= 0)
             {
+                PlayerPrefs.SetFloat("currentHealth", 0f);
                 checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
@@ -257,9 +260,10 @@ public class PlayerScript : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         currentInvincibilityTimer = defaultInvincibilityTimer;
         canMove = true;
+        checkPointSystem = GameObject.FindGameObjectWithTag("CheckpointSystem").GetComponent<CheckPointSystem>();
+        currentHealth = PlayerPrefs.GetFloat("currentHealth");
         healthBar.fillAmount = (currentHealth / maxHealth);
         currentNoWallSlideOnSameWallTimer = 0f;
-        checkPointSystem = GameObject.FindGameObjectWithTag("CheckpointSystem").GetComponent<CheckPointSystem>();
         cameraPos = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         if (checkPointSystem.lastCheckpointPos.x != 0f && checkPointSystem.lastCheckpointPos.y != 0f)
         {

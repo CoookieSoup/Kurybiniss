@@ -17,11 +17,4 @@ public class CheckpointTriggerScript : MonoBehaviour
             checkPointSystem.lastCheckpointPos = transform.position;
         }
     }
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
