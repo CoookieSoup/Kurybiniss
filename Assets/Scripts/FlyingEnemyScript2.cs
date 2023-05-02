@@ -14,7 +14,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
     public float EnemyDetectRange;
     private bool hasSeen = false;
     [HideInInspector] public Rigidbody2D rigidBody2D;
-    [HideInInspector] public bool hasBeenHit = false;
+    public bool hasBeenHit = false;
     [HideInInspector] public float currentKnockbackDuration;
     public float defaultKnockbackDuration;
     [HideInInspector] public bool hasResetKnockbackDuration;
@@ -24,7 +24,6 @@ public class FlyingEnemyScript2 : MonoBehaviour
     public bool Flipx = false;
     public int currentHealth;
     public int maxHealth = 3;
-    public LayerMask enemyLayer;
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -35,8 +34,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
         currentKnockbackDuration = -1f;
         sprite = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
-        Physics2D.IgnoreLayerCollision(enemyLayer, playerScript.wallLayer, true);
-        Physics2D.IgnoreLayerCollision(enemyLayer, enemyLayer, true);
+        Physics2D.IgnoreLayerCollision(6, 6, true);
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
@@ -44,12 +42,18 @@ public class FlyingEnemyScript2 : MonoBehaviour
         {
             Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
         }
+        if (collider.gameObject.CompareTag("Ground") && hasBeenHit)
+        {
+            hasBeenHit = false;
+
+        }
         if (collider.gameObject.CompareTag("Ground") && !hasBeenHit)
         {
             hasBeenHit = false;
+            Physics2D.IgnoreLayerCollision(6, 3, true);
         }
-
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -90,7 +94,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
         }
         if (hasBeenHit)
         {
-            Physics2D.IgnoreLayerCollision(enemyLayer, playerScript.wallLayer, true);
+            Physics2D.IgnoreLayerCollision(6, 3, false);
             currentKnockbackDuration -= Time.deltaTime;
             hasResetKnockbackDuration = false;
             transform.position = Vector3.MoveTowards(transform.position, new Vector2(transform.position.x + (transform.position.x - knockbackOrigin.x), transform.position.y + (transform.position.y - knockbackOrigin.y)), knockbackMultiplier * EnemyFollowSpeed * Time.deltaTime);
