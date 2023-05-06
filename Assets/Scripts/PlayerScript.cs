@@ -276,6 +276,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        healthBar.fillAmount = (currentHealth / maxHealth);
         if (currentNoWallSlideOnSameWallTimer <= 0f)
         {
             lastWallslidedWallX = 1000000f;
