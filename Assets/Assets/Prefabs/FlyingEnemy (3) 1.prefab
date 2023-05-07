@@ -64,7 +64,8 @@ MonoBehaviour:
   sprite: {fileID: 0}
   Flipx: 0
   currentHealth: 0
-  maxHealth: 5
+  maxHealth: 3
+  isContactWithWall: 0
 --- !u!212 &3268165713533478675
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -130,7 +131,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.48043108, y: 0.45242095}
+  m_Offset: {x: -1.0812556, y: -1.3266776}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -141,7 +142,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.8496895, y: 9.8505535}
+  m_Size: {x: 4.6193438, y: 6.292356}
   m_EdgeRadius: 0
 --- !u!50 &5698503669868028168
 Rigidbody2D:

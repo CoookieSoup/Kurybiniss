@@ -15,7 +15,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
     private bool hasSeen = false;
     [HideInInspector] public Rigidbody2D rigidBody2D;
     public bool hasBeenHit = false;
-    [HideInInspector] public float currentKnockbackDuration;
+    public float currentKnockbackDuration;
     public float defaultKnockbackDuration;
     [HideInInspector] public bool hasResetKnockbackDuration;
     [HideInInspector] public Vector2 knockbackOrigin;
@@ -24,6 +24,7 @@ public class FlyingEnemyScript2 : MonoBehaviour
     public bool Flipx = false;
     public int currentHealth;
     public int maxHealth = 3;
+    public bool isContactWithWall;
     void Start()
     {
         playerScript = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
@@ -35,24 +36,9 @@ public class FlyingEnemyScript2 : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
         Physics2D.IgnoreLayerCollision(6, 6, true);
+        isContactWithWall = false;
     }
-    void OnCollisionEnter2D(Collision2D collider)
-    {
-        if (collider.gameObject.CompareTag("Player"))
-        {
-            Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
-        }
-        if (collider.gameObject.CompareTag("Ground") && hasBeenHit)
-        {
-            hasBeenHit = false;
-
-        }
-        if (collider.gameObject.CompareTag("Ground") && !hasBeenHit)
-        {
-            hasBeenHit = false;
-            Physics2D.IgnoreLayerCollision(6, 3, true);
-        }
-    }
+    
 
     // Update is called once per frame
     void Update()
@@ -97,7 +83,10 @@ public class FlyingEnemyScript2 : MonoBehaviour
             Physics2D.IgnoreLayerCollision(6, 3, false);
             currentKnockbackDuration -= Time.deltaTime;
             hasResetKnockbackDuration = false;
-            transform.position = Vector3.MoveTowards(transform.position, new Vector2(transform.position.x + (transform.position.x - knockbackOrigin.x), transform.position.y + (transform.position.y - knockbackOrigin.y)), knockbackMultiplier * EnemyFollowSpeed * Time.deltaTime);
+            if (!isContactWithWall)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, new Vector2(transform.position.x + (transform.position.x - knockbackOrigin.x), transform.position.y + (transform.position.y - knockbackOrigin.y)), knockbackMultiplier * EnemyFollowSpeed * Time.deltaTime);
+            }
             if (transform.position.x < knockbackOrigin.x)
             {
                 Flipx = true;
@@ -110,8 +99,8 @@ public class FlyingEnemyScript2 : MonoBehaviour
         if (currentKnockbackDuration < 0f && !hasResetKnockbackDuration)
         {
             hasBeenHit = false;
-            currentKnockbackDuration = defaultKnockbackDuration;
             hasResetKnockbackDuration = true;
+            isContactWithWall = false;
         }
         if (!Flipx)
         {
@@ -126,5 +115,26 @@ public class FlyingEnemyScript2 : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    
+    void OnCollisionEnter2D(Collision2D collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
+        {
+            Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
+        }
+        if (collider.gameObject.CompareTag("Ground") && hasBeenHit)
+        {
+            isContactWithWall = true;
+            rigidBody2D.velocity = new Vector2(0f, 0f);
+            if (currentKnockbackDuration <= 0f)
+            {
+                hasBeenHit = false;
+            }
+        }
+        if (collider.gameObject.CompareTag("Ground") && !hasBeenHit)
+        {
+            hasBeenHit = false;
+            Physics2D.IgnoreLayerCollision(6, 3, true);
+        }
+    }
+
 }

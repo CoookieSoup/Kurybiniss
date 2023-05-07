@@ -16,9 +16,10 @@ public class AttackCheckRightScript : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            if (Input.GetButtonDown("Fire1") && !playerScript.flipX)
+            flyingEnemyScript = collision.GetComponent<FlyingEnemyScript2>();
+            if (Input.GetButtonDown("Fire1") && !playerScript.flipX && flyingEnemyScript.currentKnockbackDuration <= 0f)
             {
-                flyingEnemyScript = collision.GetComponent<FlyingEnemyScript2>();
+                flyingEnemyScript.currentKnockbackDuration = flyingEnemyScript.defaultKnockbackDuration;
                 flyingEnemyScript.hasBeenHit = true;
                 flyingEnemyScript.knockbackOrigin = playerTransform.position;
                 flyingEnemyScript.currentHealth--;

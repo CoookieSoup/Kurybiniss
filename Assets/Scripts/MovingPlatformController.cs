@@ -31,13 +31,13 @@ public class MovingPlatformController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector2.Distance(transform.position, posA.position) < 1f)
+        if (Vector2.Distance(transform.position, posA.position) < 3f)
         {
             targetPos = posB.position;
             DirectionCalculate();
         }
 
-        if (Vector2.Distance(transform.position, posB.position) < 1f)
+        if (Vector2.Distance(transform.position, posB.position) < 3f)
         {
             targetPos = posA.position;
             DirectionCalculate();
