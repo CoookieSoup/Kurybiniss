@@ -5,10 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class GroundEnemyScript : MonoBehaviour
 {
-    //RaycastHit2D hit;
     public RaycastHit2D hitUpper;
     public Transform playerPos;
-    private Rigidbody2D GroundEnemyRb;
+    public Rigidbody2D GroundEnemyRb;
     private Transform GroundEnemyLOSCheck;
     [SerializeField] private float GroundEnemySpeedStrength = 10f;
     [SerializeField] private float EnemyDetectRange;
@@ -28,6 +27,10 @@ public class GroundEnemyScript : MonoBehaviour
     private bool hasReturnedToPatrolOrigin;
     public SpriteRenderer sprite;
     public Animator animator;
+    public bool hasBeenHit;
+    public float currentHitTime = 0f;
+    public bool canMove = true;
+    public int knockBackDirection;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +43,6 @@ public class GroundEnemyScript : MonoBehaviour
         patrolOrigin = GroundEnemyLOSCheck.position;
         sprite = GetComponent<SpriteRenderer>();
     }
-    
     void OnCollisionEnter2D(Collision2D collider)
     {
         if (collider.gameObject.CompareTag("Player"))
@@ -52,6 +54,18 @@ public class GroundEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (hasBeenHit)
+        {
+            GroundEnemyRb.velocity = new Vector2(knockBackDirection * GroundEnemySpeedStrength, jumpStrength);
+            currentHitTime = 1f;
+            hasBeenHit = false;
+            canMove = false;
+        }
+        currentHitTime -= Time.deltaTime;
+        if (currentHitTime <= 0f && isGrounded)
+        {
+            canMove = true;
+        }
         isGrounded = Physics2D.OverlapBox(groundCheck.position, new Vector2(2.2f, 0.2f), 0, groundLayer);
         hitUpper = Physics2D.Raycast(new Vector2 (GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position);
         Debug.DrawRay(new Vector2(GroundEnemyLOSCheck.position.x, GroundEnemyLOSCheck.position.y + 2f), playerPos.position - GroundEnemyLOSCheck.position, Color.green);
@@ -67,7 +81,7 @@ public class GroundEnemyScript : MonoBehaviour
         {
             Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
         }
-        if (hitUpper.collider.gameObject.CompareTag("Player") && Mathf.Abs(playerPos.position.x - transform.position.x) < EnemyDetectRange) //31
+        if (hitUpper.collider.gameObject.CompareTag("Player") && Mathf.Abs(playerPos.position.x - transform.position.x) < EnemyDetectRange && canMove) //31
         {
             if (playerPos.position.x - transform.position.x < -1f)
             {
@@ -84,7 +98,7 @@ public class GroundEnemyScript : MonoBehaviour
             lastSeenPos = playerPos.position;
             hasSeenPlayer = true; ;
         }
-        if (!hitUpper.collider.gameObject.CompareTag("Player"))
+        if (!hitUpper.collider.gameObject.CompareTag("Player") && canMove)
         {
             if (lastSeenPos.x - transform.position.x < -30f)
             {
@@ -110,7 +124,7 @@ public class GroundEnemyScript : MonoBehaviour
             patrolDirection = patrolDirection * -1;
             currentPatrolTime = 0f;
         }
-        if (!hasSeenPlayer)
+        if (!hasSeenPlayer && canMove)
         {
             GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength * patrolDirection, GroundEnemyRb.velocity.y);
         }

@@ -57,14 +57,14 @@ MonoBehaviour:
   rigidBody2D: {fileID: 0}
   hasBeenHit: 0
   currentKnockbackDuration: 0
-  defaultKnockbackDuration: 0.5
+  defaultKnockbackDuration: 2
   hasResetKnockbackDuration: 0
   knockbackOrigin: {x: 0, y: 0}
-  knockbackMultiplier: 5
+  knockbackMultiplier: 2
   sprite: {fileID: 0}
   Flipx: 0
   currentHealth: 0
-  maxHealth: 3
+  maxHealth: 7
   isContactWithWall: 0
 --- !u!212 &3268165713533478675
 SpriteRenderer:
@@ -131,7 +131,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -1.0812556, y: -1.3266776}
+  m_Offset: {x: -0.94655275, y: -1.3826456}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -142,7 +142,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.6193438, y: 6.292356}
+  m_Size: {x: 4.5894365, y: 6.2578325}
   m_EdgeRadius: 0
 --- !u!50 &5698503669868028168
 Rigidbody2D:

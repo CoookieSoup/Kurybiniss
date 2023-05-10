@@ -1,5 +1,137 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &855829143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 855829144}
+  - component: {fileID: 855829146}
+  - component: {fileID: 855829145}
+  m_Layer: 0
+  m_Name: attackCheckRight (1)
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &855829144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855829143}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8508477108469842754}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &855829146
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855829143}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 7, y: 0}
+  m_Size: {x: 20, y: 7.15}
+  m_Direction: 1
+--- !u!114 &855829145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855829143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e121dacd06e29c458387c69db45e8f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 0}
+  groundEnemyScript: {fileID: 0}
+  groundEnemyRigidBody2D: {fileID: 0}
+  playerTransform: {fileID: 0}
+  getransfrom: {fileID: 0}
+--- !u!1 &1250959140
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1250959141}
+  - component: {fileID: 1250959143}
+  - component: {fileID: 1250959142}
+  m_Layer: 0
+  m_Name: attackCheckLeft (1)
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1250959141
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250959140}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8508477108469842754}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!70 &1250959143
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250959140}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 7, y: 0}
+  m_Size: {x: 20, y: 7.15}
+  m_Direction: 1
+--- !u!114 &1250959142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250959140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ce228a13ee8b647a658142e2cef9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerScript: {fileID: 0}
+  groundEnemyScript: {fileID: 0}
+  groundEnemyRigidBody2D: {fileID: 0}
+  playerTransform: {fileID: 0}
+  getransfrom: {fileID: 0}
 --- !u!1 &8508477107977513462
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +145,7 @@ GameObject:
   - component: {fileID: 8508477107977513456}
   m_Layer: 0
   m_Name: attackCheckLeft
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 8508477107977513462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8508477108469842754}
@@ -45,6 +177,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89253e55997e6df4a84ad6ac1e6f70fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerScript: {fileID: 0}
+  flyingEnemyScript: {fileID: 0}
+  groundEnemyScript: {fileID: 0}
+  groundEnemyRigidBody2D: {fileID: 0}
+  playerTransform: {fileID: 0}
+  getransfrom: {fileID: 0}
 --- !u!70 &8508477107977513456
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -58,8 +196,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 11.9, y: 0}
-  m_Size: {x: 21.48, y: 7.15}
+  m_Offset: {x: 7, y: 0}
+  m_Size: {x: 20, y: 7.15}
   m_Direction: 1
 --- !u!1 &8508477108143342372
 GameObject:
@@ -248,7 +386,7 @@ GameObject:
   - component: {fileID: 8508477109165213969}
   m_Layer: 0
   m_Name: attackCheckRight
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -262,7 +400,7 @@ Transform:
   m_GameObject: {fileID: 8508477109165213975}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8508477108469842754}
@@ -281,8 +419,8 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 11.9, y: 0}
-  m_Size: {x: 21.48, y: 7.15}
+  m_Offset: {x: 7, y: 0}
+  m_Size: {x: 20, y: 7.15}
   m_Direction: 1
 --- !u!114 &8508477109165213969
 MonoBehaviour:
@@ -296,6 +434,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd357309bf226024493ebe222a77dfae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerScript: {fileID: 0}
+  flyingEnemyScript: {fileID: 0}
+  groundEnemyScript: {fileID: 0}
+  groundEnemyRigidBody2D: {fileID: 0}
+  playerTransform: {fileID: 0}
+  getransfrom: {fileID: 0}
 --- !u!1 &8508477109462837388
 GameObject:
   m_ObjectHideFlags: 0
@@ -335,6 +479,8 @@ Transform:
   - {fileID: 8508477108595904113}
   - {fileID: 8508477107977513457}
   - {fileID: 8508477109165213974}
+  - {fileID: 1250959141}
+  - {fileID: 855829144}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -477,12 +623,13 @@ MonoBehaviour:
   hasExitedWallSlideZone: 0
   lastWallJumpY: 0
   maxHealth: 4
-  currentHealth: 10
+  currentHealth: 0
   healthBar: {fileID: 0}
   defaultInvincibilityTimer: 3
   tookDamage: 0
   canMove: 0
   noInputTimeAfterTakingDamage: 0.5
+  cameraPos: {fileID: 0}
 --- !u!95 &8508477108469842765
 Animator:
   serializedVersion: 4

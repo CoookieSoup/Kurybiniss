@@ -888,34 +888,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3268165713533478674, guid: 2c4ed26632c7196498e8a6a1bb29fd2f, type: 3}
-      propertyPath: maxHealth
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 3268165713533478674, guid: 2c4ed26632c7196498e8a6a1bb29fd2f, type: 3}
-      propertyPath: knockbackMultiplier
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3268165713533478674, guid: 2c4ed26632c7196498e8a6a1bb29fd2f, type: 3}
-      propertyPath: defaultKnockbackDuration
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3268165713533478676, guid: 2c4ed26632c7196498e8a6a1bb29fd2f, type: 3}
-      propertyPath: m_Size.x
-      value: 4.5894365
-      objectReference: {fileID: 0}
-    - target: {fileID: 3268165713533478676, guid: 2c4ed26632c7196498e8a6a1bb29fd2f, type: 3}
-      propertyPath: m_Size.y
-      value: 6.2578325
-      objectReference: {fileID: 0}
-    - target: {fileID: 3268165713533478676, guid: 2c4ed26632c7196498e8a6a1bb29fd2f, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.94655275
-      objectReference: {fileID: 0}
-    - target: {fileID: 3268165713533478676, guid: 2c4ed26632c7196498e8a6a1bb29fd2f, type: 3}
-      propertyPath: m_Offset.y
-      value: -1.3826456
-      objectReference: {fileID: 0}
     - target: {fileID: 3268165713533478677, guid: 2c4ed26632c7196498e8a6a1bb29fd2f, type: 3}
       propertyPath: m_Name
       value: FlyingEnemy (3) 1 (2)
@@ -3353,11 +3325,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7019809504234861753, guid: 9f3fdecec71ded647b8b2eeaaa251447, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -859.7893
+      value: -869.58
       objectReference: {fileID: 0}
     - target: {fileID: 7019809504234861753, guid: 9f3fdecec71ded647b8b2eeaaa251447, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.002571
+      value: 1.95
       objectReference: {fileID: 0}
     - target: {fileID: 7019809504234861753, guid: 9f3fdecec71ded647b8b2eeaaa251447, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7694,25 +7666,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8508477107977513456, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
-      propertyPath: m_Size.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8508477107977513456, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
-      propertyPath: m_Offset.x
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 8508477108469842754, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
       propertyPath: m_RootOrder
       value: 44
       objectReference: {fileID: 0}
     - target: {fileID: 8508477108469842754, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -772.1
+      value: -560.9
       objectReference: {fileID: 0}
     - target: {fileID: 8508477108469842754, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 56.2
+      value: 71.7
       objectReference: {fileID: 0}
     - target: {fileID: 8508477108469842754, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7750,22 +7714,6 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1961555621305341195}
-    - target: {fileID: 8508477108469842764, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
-      propertyPath: maxHealth
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8508477108469842764, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
-      propertyPath: currentHealth
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8508477109165213968, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
-      propertyPath: m_Size.x
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 8508477109165213968, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
-      propertyPath: m_Offset.x
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 8508477109462837388, guid: 254f8e14fabce134188f63bcdda1efe7, type: 3}
       propertyPath: m_Name
       value: Player
