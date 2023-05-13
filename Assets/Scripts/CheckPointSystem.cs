@@ -32,7 +32,6 @@ public class CheckPointSystem : MonoBehaviour
         {
             PlayerPrefs.SetFloat("currentHealth", 4f);
         }
-        
     }
 
     public float GetFloat(string currentHealth)

@@ -53,8 +53,10 @@ public class PlayerScript : MonoBehaviour
 
     CheckPointSystem checkPointSystem;
 
-    public Transform cameraPos; 
+    public Transform cameraPos;
 
+    public Scene currentScene;
+    public int levelId;
 
     // Wall slide logic start
 
@@ -270,12 +272,22 @@ public class PlayerScript : MonoBehaviour
             transform.position = checkPointSystem.lastCheckpointPos;
             cameraPos.position = checkPointSystem.lastCheckpointPos;
         }
-        
-    }
+        /*Scene currentScene = SceneManager.GetActiveScene();
+        levelId = currentScene.buildIndex;*/
+        levelId = SceneManager.GetActiveScene().buildIndex;
 
+
+
+    }
+/*    public void SetFloat(string levelId, int level)
+    {
+        level = SceneManager.GetActiveScene().buildIndex;
+    }*/
     // Update is called once per frame
     void Update()
     {
+        //PlayerPrefs.SetInt("levelId", levelId);
+        Debug.Log(levelId);
         healthBar.fillAmount = (currentHealth / maxHealth);
         if (currentNoWallSlideOnSameWallTimer <= 0f)
         {

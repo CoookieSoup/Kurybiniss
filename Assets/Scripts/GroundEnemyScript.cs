@@ -31,6 +31,8 @@ public class GroundEnemyScript : MonoBehaviour
     public float currentHitTime = 0f;
     public bool canMove = true;
     public int knockBackDirection;
+    public int maxHealth;
+    public int currentHealth;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +44,7 @@ public class GroundEnemyScript : MonoBehaviour
         playerCollider2D = GameObject.FindGameObjectWithTag("Player").GetComponent<Collider2D>();
         patrolOrigin = GroundEnemyLOSCheck.position;
         sprite = GetComponent<SpriteRenderer>();
+        currentHealth = maxHealth;
     }
     void OnCollisionEnter2D(Collision2D collider)
     {
@@ -79,10 +82,10 @@ public class GroundEnemyScript : MonoBehaviour
         {
             animator.SetBool("GolemSpeed", true);
         }
-        if (GroundEnemyRb.velocity.x == 0)
+        /*if (GroundEnemyRb.velocity.x == 0)
         {
-            //animator.SetBool("GolemSpeed", false);
-        }
+            animator.SetBool("GolemSpeed", false);
+        }*/
         if (playerScript.tookDamage)
         {
             Physics2D.IgnoreCollision(enemyCollider2D, playerCollider2D, true);
@@ -158,6 +161,10 @@ public class GroundEnemyScript : MonoBehaviour
         if (GroundEnemyRb.velocity.x < 0f)
         {
             sprite.flipX = true;
+        }
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
         }
     }
     

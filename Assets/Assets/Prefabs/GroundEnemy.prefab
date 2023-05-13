@@ -193,12 +193,15 @@ MonoBehaviour:
   patrolDirection: 1
   hasSeenPlayer: 0
   patrolOrigin: {x: 0, y: 0}
+  hasReturnedToPatrolOrigin: 0
   sprite: {fileID: 0}
   animator: {fileID: 7019809504234861756}
   hasBeenHit: 0
   currentHitTime: 0
   canMove: 1
   knockBackDirection: 0
+  maxHealth: 4
+  currentHealth: 0
 --- !u!61 &7019809504234861754
 BoxCollider2D:
   m_ObjectHideFlags: 0

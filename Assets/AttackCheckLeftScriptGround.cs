@@ -20,7 +20,7 @@ public class AttackCheckLeftScriptGround : MonoBehaviour
         groundEnemyScript = collision.GetComponent<GroundEnemyScript>();
         if (collision.CompareTag("Enemy") && Input.GetButtonDown("Fire1") && playerScript.flipX && groundEnemyScript.canMove)
         {
-            
+            groundEnemyScript.currentHealth--;
             groundEnemyRigidBody2D = collision.GetComponent<Rigidbody2D>();
             getransfrom = collision.GetComponent<Transform>();
             groundEnemyScript.hasBeenHit = true;
