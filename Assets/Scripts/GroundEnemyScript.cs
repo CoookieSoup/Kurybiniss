@@ -24,7 +24,7 @@ public class GroundEnemyScript : MonoBehaviour
     public int patrolDirection = 1;
     public bool hasSeenPlayer = false;
     public Vector2 patrolOrigin;
-    private bool hasReturnedToPatrolOrigin;
+    public bool hasReturnedToPatrolOrigin;
     public SpriteRenderer sprite;
     public Animator animator;
     public bool hasBeenHit;
@@ -54,6 +54,12 @@ public class GroundEnemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (transform.position.x < patrolOrigin.x + 2f && patrolDirection == 0 && transform.position.x > patrolOrigin.x - 2f)
+        {
+            hasReturnedToPatrolOrigin = true;
+            currentPatrolTime = 0f;
+            patrolDirection = 1;
+        }
         if (hasBeenHit)
         {
             GroundEnemyRb.velocity = new Vector2(knockBackDirection * GroundEnemySpeedStrength, jumpStrength);
@@ -75,7 +81,7 @@ public class GroundEnemyScript : MonoBehaviour
         }
         if (GroundEnemyRb.velocity.x == 0)
         {
-            animator.SetBool("GolemSpeed", false);
+            //animator.SetBool("GolemSpeed", false);
         }
         if (playerScript.tookDamage)
         {
@@ -83,6 +89,7 @@ public class GroundEnemyScript : MonoBehaviour
         }
         if (hitUpper.collider.gameObject.CompareTag("Player") && Mathf.Abs(playerPos.position.x - transform.position.x) < EnemyDetectRange && canMove) //31
         {
+            hasReturnedToPatrolOrigin = false;
             if (playerPos.position.x - transform.position.x < -1f)
             {
                 GroundEnemyRb.velocity = new Vector2(-GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
@@ -94,6 +101,7 @@ public class GroundEnemyScript : MonoBehaviour
             if (Mathf.Abs(playerPos.position.x - transform.position.x) <= 1f)
             {
                 GroundEnemyRb.velocity = new Vector2(0f, GroundEnemyRb.velocity.y);
+                animator.SetBool("GolemSpeed", false);
             }
             lastSeenPos = playerPos.position;
             hasSeenPlayer = true; ;
@@ -124,9 +132,24 @@ public class GroundEnemyScript : MonoBehaviour
             patrolDirection = patrolDirection * -1;
             currentPatrolTime = 0f;
         }
-        if (!hasSeenPlayer && canMove)
+        if (!hasSeenPlayer && canMove && !hitUpper.collider.gameObject.CompareTag("Player"))
         {
-            GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength * patrolDirection, GroundEnemyRb.velocity.y);
+            if (!hasReturnedToPatrolOrigin)
+            {
+                patrolDirection = 0;
+                if (transform.position.x > patrolOrigin.x)
+                {
+                    GroundEnemyRb.velocity = new Vector2(-GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
+                }
+                if (transform.position.x < patrolOrigin.x)
+                {
+                    GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength, GroundEnemyRb.velocity.y);
+                }
+            }
+            if (hasReturnedToPatrolOrigin)
+            {
+                 GroundEnemyRb.velocity = new Vector2(GroundEnemySpeedStrength * patrolDirection, GroundEnemyRb.velocity.y);
+            }
         }
         if (GroundEnemyRb.velocity.x > 0f)
         {

@@ -8,7 +8,7 @@ public class LeftJumpCheckScript : MonoBehaviour
     GroundEnemyScript groundEnemyScript;
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && groundEnemyScript.isGrounded && GroundEnemyRb.velocity.x <= 0f)
+        if (collision.gameObject.CompareTag("Ground") && groundEnemyScript.isGrounded && GroundEnemyRb.velocity.x <= 0f && !groundEnemyScript.hasReturnedToPatrolOrigin)
         {
             GroundEnemyRb.velocity = new Vector2(GroundEnemyRb.velocity.x, groundEnemyScript.jumpStrength);
         }
