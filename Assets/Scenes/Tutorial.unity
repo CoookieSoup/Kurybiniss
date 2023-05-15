@@ -1741,6 +1741,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Health
       objectReference: {fileID: 0}
+    - target: {fileID: 1622025850822425606, guid: bb9c3eeb189bc714b91335aac95c6aee, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bd71a25470211ca4a8cbfca221d8df2a, type: 3}
+    - target: {fileID: 1622025850822425624, guid: bb9c3eeb189bc714b91335aac95c6aee, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 795.225
+      objectReference: {fileID: 0}
+    - target: {fileID: 1622025850822425624, guid: bb9c3eeb189bc714b91335aac95c6aee, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 170.8951
+      objectReference: {fileID: 0}
+    - target: {fileID: 1622025850822425624, guid: bb9c3eeb189bc714b91335aac95c6aee, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -643.0881
+      objectReference: {fileID: 0}
+    - target: {fileID: 1622025850822425624, guid: bb9c3eeb189bc714b91335aac95c6aee, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 454.55386
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb9c3eeb189bc714b91335aac95c6aee, type: 3}
 --- !u!114 &727304658 stripped
