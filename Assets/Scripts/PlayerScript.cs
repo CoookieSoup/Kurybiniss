@@ -221,7 +221,7 @@ public class PlayerScript : MonoBehaviour
             {
                 PlayerPrefs.SetFloat("currentHealth", 0f);
                 checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(1);
             }
             if (currentHealth == 4)
             {
@@ -274,7 +274,7 @@ public class PlayerScript : MonoBehaviour
             {
                 PlayerPrefs.SetFloat("currentHealth", 0f);
                 checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(1);
             }
             if (currentHealth == 4)
             {
@@ -402,6 +402,12 @@ public class PlayerScript : MonoBehaviour
             healthBar3.enabled = false;
             healthBar2.enabled = false;
             healthBar1.enabled = true;
+        }
+        if (currentHealth == 0)
+        {
+            PlayerPrefs.SetFloat("currentHealth", 0f);
+            checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
+            SceneManager.LoadScene(1);
         }
         //healthBar.fillAmount = (currentHealth / maxHealth);
         if (currentNoWallSlideOnSameWallTimer <= 0f)

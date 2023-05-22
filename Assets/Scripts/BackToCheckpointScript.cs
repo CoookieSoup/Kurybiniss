@@ -16,7 +16,16 @@ public class BackToCheckpointScript : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             PlayerPrefs.SetFloat("currentHealth", playerScript.currentHealth - 1f);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            if (PlayerPrefs.GetFloat("currentHealth") <= 0)
+            {
+                checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
+                SceneManager.LoadScene(1);
+            }
+            else
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
+            
         }
     }
 }
