@@ -625,11 +625,19 @@ MonoBehaviour:
   maxHealth: 4
   currentHealth: 0
   healthBar: {fileID: 0}
+  healthBar1: {fileID: 0}
+  healthBar2: {fileID: 0}
+  healthBar3: {fileID: 0}
+  healthBar4: {fileID: 0}
   defaultInvincibilityTimer: 3
   tookDamage: 0
   canMove: 0
   noInputTimeAfterTakingDamage: 0.5
   cameraPos: {fileID: 0}
+  currentScene:
+    m_Handle: 0
+  levelId: 0
+  canvas: {fileID: 0}
 --- !u!95 &8508477108469842765
 Animator:
   serializedVersion: 4

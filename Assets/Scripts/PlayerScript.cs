@@ -45,6 +45,10 @@ public class PlayerScript : MonoBehaviour
     public float maxHealth = 4f;
     public float currentHealth;
     public Image healthBar;
+    public Image healthBar1;
+    public Image healthBar2;
+    public Image healthBar3;
+    public Image healthBar4;
     public float defaultInvincibilityTimer;
     private float currentInvincibilityTimer;
     public bool tookDamage;
@@ -57,6 +61,8 @@ public class PlayerScript : MonoBehaviour
 
     public Scene currentScene;
     public int levelId;
+
+    public Canvas canvas;
 
     // Wall slide logic start
 
@@ -217,7 +223,35 @@ public class PlayerScript : MonoBehaviour
                 checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            healthBar.fillAmount = (currentHealth / maxHealth);
+            if (currentHealth == 4)
+            {
+                healthBar4.enabled = true;
+                healthBar3.enabled = false;
+                healthBar2.enabled = false;
+                healthBar1.enabled = false;
+            }
+            if (currentHealth == 3)
+            {
+                healthBar4.enabled = false;
+                healthBar3.enabled = true;
+                healthBar2.enabled = false;
+                healthBar1.enabled = false;
+            }
+            if (currentHealth == 2)
+            {
+                healthBar4.enabled = false;
+                healthBar3.enabled = false;
+                healthBar2.enabled = true;
+                healthBar1.enabled = false;
+            }
+            if (currentHealth == 1)
+            {
+                healthBar4.enabled = false;
+                healthBar3.enabled = false;
+                healthBar2.enabled = false;
+                healthBar1.enabled = true;
+            }
+            //healthBar.fillAmount = (currentHealth / maxHealth);
             if (collider.gameObject.transform.position.x < myRigidbody.position.x)
             {
                 myRigidbody.velocity = new Vector2(speedStrength, jumpStrength);
@@ -242,7 +276,35 @@ public class PlayerScript : MonoBehaviour
                 checkPointSystem.lastCheckpointPos = new Vector2(0f, 0f);
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            healthBar.fillAmount = (currentHealth / maxHealth);
+            if (currentHealth == 4)
+            {
+                healthBar4.enabled = true;
+                healthBar3.enabled = false;
+                healthBar2.enabled = false;
+                healthBar1.enabled = false;
+            }
+            if (currentHealth == 3)
+            {
+                healthBar4.enabled = false;
+                healthBar3.enabled = true;
+                healthBar2.enabled = false;
+                healthBar1.enabled = false;
+            }
+            if (currentHealth == 2)
+            {
+                healthBar4.enabled = false;
+                healthBar3.enabled = false;
+                healthBar2.enabled = true;
+                healthBar1.enabled = false;
+            }
+            if (currentHealth == 1)
+            {
+                healthBar4.enabled = false;
+                healthBar3.enabled = false;
+                healthBar2.enabled = false;
+                healthBar1.enabled = true;
+            }
+            //healthBar.fillAmount = (currentHealth / maxHealth);
             if (collider.gameObject.transform.position.x < myRigidbody.position.x)
             {
                 myRigidbody.velocity = new Vector2(20f, 40f);
@@ -264,7 +326,39 @@ public class PlayerScript : MonoBehaviour
         canMove = true;
         checkPointSystem = GameObject.FindGameObjectWithTag("CheckpointSystem").GetComponent<CheckPointSystem>();
         currentHealth = PlayerPrefs.GetFloat("currentHealth");
-        healthBar.fillAmount = (currentHealth / maxHealth);
+        healthBar1 = GameObject.Find("Health1").GetComponent<Image>();
+        healthBar2 = GameObject.Find("Health2").GetComponent<Image>();
+        healthBar3 = GameObject.Find("Health3").GetComponent<Image>();
+        healthBar4 = GameObject.Find("Health4").GetComponent<Image>();
+        if (currentHealth == 4)
+        {
+            healthBar4.enabled = true;
+            healthBar3.enabled = false;
+            healthBar2.enabled = false;
+            healthBar1.enabled = false;
+        }
+        if (currentHealth == 3)
+        {
+            healthBar4.enabled = false;
+            healthBar3.enabled = true;
+            healthBar2.enabled = false;
+            healthBar1.enabled = false;
+        }
+        if (currentHealth == 2)
+        {
+            healthBar4.enabled = false;
+            healthBar3.enabled = false;
+            healthBar2.enabled = true;
+            healthBar1.enabled = false;
+        }
+        if (currentHealth == 1)
+        {
+            healthBar4.enabled = false;
+            healthBar3.enabled = false;
+            healthBar2.enabled = false;
+            healthBar1.enabled = true;
+        }
+        //healthBar.fillAmount = (currentHealth / maxHealth);
         currentNoWallSlideOnSameWallTimer = 0f;
         cameraPos = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
         if (checkPointSystem.lastCheckpointPos.x != 0f && checkPointSystem.lastCheckpointPos.y != 0f)
@@ -272,23 +366,44 @@ public class PlayerScript : MonoBehaviour
             transform.position = checkPointSystem.lastCheckpointPos;
             cameraPos.position = checkPointSystem.lastCheckpointPos;
         }
-        /*Scene currentScene = SceneManager.GetActiveScene();
-        levelId = currentScene.buildIndex;*/
         levelId = SceneManager.GetActiveScene().buildIndex;
 
 
 
     }
-/*    public void SetFloat(string levelId, int level)
-    {
-        level = SceneManager.GetActiveScene().buildIndex;
-    }*/
+
     // Update is called once per frame
     void Update()
     {
-        //PlayerPrefs.SetInt("levelId", levelId);
-        Debug.Log(levelId);
-        healthBar.fillAmount = (currentHealth / maxHealth);
+        if(currentHealth == 4)
+        {
+            healthBar4.enabled = true;
+            healthBar3.enabled = false;
+            healthBar2.enabled = false;
+            healthBar1.enabled = false;
+        }
+        if (currentHealth == 3)
+        {
+            healthBar4.enabled = false;
+            healthBar3.enabled = true;
+            healthBar2.enabled = false;
+            healthBar1.enabled = false;
+        }
+        if (currentHealth == 2)
+        {
+            healthBar4.enabled = false;
+            healthBar3.enabled = false;
+            healthBar2.enabled = true;
+            healthBar1.enabled = false;
+        }
+        if (currentHealth == 1)
+        {
+            healthBar4.enabled = false;
+            healthBar3.enabled = false;
+            healthBar2.enabled = false;
+            healthBar1.enabled = true;
+        }
+        //healthBar.fillAmount = (currentHealth / maxHealth);
         if (currentNoWallSlideOnSameWallTimer <= 0f)
         {
             lastWallslidedWallX = 1000000f;
