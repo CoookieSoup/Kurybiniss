@@ -41,9 +41,10 @@ public class GroundConsumableScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Player") && playerScript.currentHealth < playerScript.maxHealth)
+        if (collider.gameObject.CompareTag("Player") && playerScript.currentHealth < 4)
         {
             playerScript.currentHealth++;
+            
             Destroy(gameObject);
         }
     }

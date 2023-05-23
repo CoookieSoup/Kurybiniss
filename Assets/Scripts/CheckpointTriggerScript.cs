@@ -14,6 +14,7 @@ public class CheckpointTriggerScript : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+
             checkPointSystem.lastCheckpointPos = transform.position;
         }
     }
