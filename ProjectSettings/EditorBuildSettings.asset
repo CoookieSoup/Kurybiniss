@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Simo room.unity
     guid: 01eeebe8672231a4d81fb45c93259624
+  - enabled: 1
+    path: Assets/Scenes/EndGamee.unity
+    guid: 7a62c81164e71344fa6112131b3bb77b
   m_configObjects: {}

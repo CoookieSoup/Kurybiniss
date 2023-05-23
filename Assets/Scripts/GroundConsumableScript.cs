@@ -7,6 +7,7 @@ public class GroundConsumableScript : MonoBehaviour
     PlayerScript playerScript;
     public float floatTimer = 0f;
     public Transform groundConsumableTransform;
+    public float a;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,10 +42,12 @@ public class GroundConsumableScript : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("Player") && playerScript.currentHealth < 4)
+        if (collider.gameObject.CompareTag("Player") && PlayerPrefs.GetFloat("currentHealth") < 4)
         {
-            playerScript.currentHealth++;
-            
+            a = PlayerPrefs.GetFloat("currentHealth");
+            PlayerPrefs.SetFloat("currentHealth", a + 1f);
+            playerScript.currentHealth = a + 1;
+
             Destroy(gameObject);
         }
     }

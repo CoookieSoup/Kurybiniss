@@ -211,6 +211,10 @@ public class PlayerScript : MonoBehaviour
     // Health system start
     private void OnCollisionEnter2D(Collision2D collider)
     {
+        if (collider.gameObject.CompareTag("Ground") && jumpedOffMovingPlatform)
+        {
+            jumpedOffMovingPlatform = false;
+        }
         if (collider.gameObject.CompareTag("Enemy") && tookDamage == false)
         {
             canMove = false;
