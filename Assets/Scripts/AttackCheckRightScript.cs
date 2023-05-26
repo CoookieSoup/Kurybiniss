@@ -10,7 +10,7 @@ public class AttackCheckRightScript : MonoBehaviour
     public Rigidbody2D groundEnemyRigidBody2D;
     public Transform playerTransform;
     public Transform getransfrom;
-    void Start()
+    /*void Start()
     {
         playerScript = GetComponentInParent<PlayerScript>();
         playerTransform = GetComponentInParent<Transform>();
@@ -32,16 +32,7 @@ public class AttackCheckRightScript : MonoBehaviour
                 }
 
             }
-            //getransfrom.position = new Vector2(100f, 100f);
-            
-
-            //groundEnemyScript.currentHitTime = 100f;
-            //groundEnemyRigidBody2D.AddForce(new Vector2(10f, 10f), ForceMode2D.Impulse);
-            //if (Input.GetButtonDown("Fire1") && playerScript.flipX)
-            //{
-
-            //}
         }
         
-    }
+    }*/
 }

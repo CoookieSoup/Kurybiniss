@@ -9,12 +9,12 @@ public class AttackCheckRightScriptGround : MonoBehaviour
     public Rigidbody2D groundEnemyRigidBody2D;
     public Transform playerTransform;
     public Transform getransfrom;
-    void Start()
+    /*void Start()
     {
         playerScript = GetComponentInParent<PlayerScript>();
         playerTransform = GetComponentInParent<Transform>();
-    }
-    private void OnTriggerStay2D(Collider2D collision)
+    }*/
+    /*private void OnTriggerStay2D(Collider2D collision)
     {
         getransfrom = collision.GetComponent<Transform>();
         groundEnemyScript = collision.GetComponent<GroundEnemyScript>();
@@ -33,5 +33,5 @@ public class AttackCheckRightScriptGround : MonoBehaviour
                 groundEnemyScript.knockBackDirection = 1;
             }
         }
-    }
+    }*/
 }
